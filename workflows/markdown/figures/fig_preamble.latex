@@ -1,0 +1,40 @@
+\documentclass{article}
+
+\usepackage[svgnames]{xcolor}
+\usepackage{xspace}
+
+\usepackage[hypertex]{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\input{abbrevs.tex}
+
+\usepackage[dvisvgm]{animate}
+\pagestyle{empty}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment[]{tikzpicture}
+
+\newcommand{\plotwidth}{4in}
+\newcommand{\plotheight}{2in}
+
+\usepackage[american,oldvoltagedirection]{circuitikz}
+
+\ctikzset{bipoles/length=1cm}
+\ctikzset{nodes width=0.075}
+\ctikzset{tripoles/american nand port/circle width=0.25}
+\ctikzset{tripoles/pmos style/emptycircle}
+
+
+\newcommand{\DrawVdd}[2]{
+\draw ($(#1)+(-.25,-0.25)$) -- ++(0.5,0.5);
+\node[anchor=south,yshift=0.2cm] at (#1) {#2};
+}
+\newcommand{\DrawBias}[2]{
+\draw ($(#1)+(-.25,-0.0)$) -- ++(0.5,0);
+\node[anchor=south,yshift=0.2cm] at (#1) {#2};
+}

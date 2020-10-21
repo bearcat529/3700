@@ -1,0 +1,36 @@
+\begin{tikzpicture}[
+  repos/.style={minimum width=3cm,minimum height=2cm,draw=black,align=center}
+]
+  
+  \node[repos,draw=black,align=center] at (0,0)        (upstream)
+       {\textbf{\large upstream}\\ \verb!https://left.engr.usu.edu/git/3700/!\\~\\ (professor's \textbf{master} repository)};
+       
+  \node[repos,draw=black,align=center,anchor=north] at ($(upstream.south)+(0,-1)$) (user)
+       {\textbf{\large origin}\\ \verb!https://left.engr.usu.edu/git/<username>/!\\~\\ (student's \textbf{master} repository)};
+
+  \node[repos,draw=black,align=center,anchor=west] at ($(user.east)+(6,0)$) (local)
+       {\textbf{\large clone}\\ personal computer\\ ~\\(student's working copy)};
+       
+  \node[repos,anchor=east] at ($(user.west)+(-6,0)$) (prof)
+       {\textbf{\large clone}\\ personal computer\\ ~\\ (professor's working copy)};
+       
+
+       \draw[blue,ultra thick,opacity=0.25] ($(user.west |- upstream.north west)+(-0.5,0.5)$) rectangle ($(user.south east)+(0.5,-0.5)$);
+       \node[anchor=south,yshift=0.6cm,blue] at (upstream.north) {\Large server};
+
+       \draw[red,thick,->,out=0,in=90] (upstream.east) to node[above right] {git fetch upstream; git merge} (local.north);
+       \draw[thick,->] (upstream.south) to node[right] {fork} (user.north);
+
+       \coordinate (localin)  at ($(local.north west)!0.33!(local.south west)$) ;
+       \coordinate (localout) at ($(local.north west)!0.66!(local.south west)$) ;
+
+       \draw[red,thick,->] (localout) to node[below] {git push origin master} (localout -| user.east);
+       \draw[red,thick,<-] (localin)  to node[above] {git pull origin master} (localin  -| user.east);
+
+       \coordinate (profin)  at ($(prof.north east)!0.33!(prof.south east)$) ;
+       \coordinate (profout) at ($(prof.north east)!0.66!(prof.south east)$) ;
+
+       \draw[red,thick,->] (profout) to node[below] {send notes, corrections} (profout -| user.west);
+       \draw[red,thick,<-] (profin)  to node[above] {retrieves student work} (profin  -| user.west);
+
+\end{tikzpicture}

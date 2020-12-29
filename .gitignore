@@ -2,5 +2,7 @@
 *.aux
 *.log
 *~
+solution*
+assigned_tasks.md
 
 

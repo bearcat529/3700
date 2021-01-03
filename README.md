@@ -15,7 +15,7 @@ updates by running these commands from within this directory in the terminal:
 
 ```bash
 git fetch upstream
-git merge
+git merge upstream/master
 ```
 
 Listing for First Three Weeks:

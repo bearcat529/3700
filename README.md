@@ -18,7 +18,12 @@ git fetch upstream
 git merge upstream/master
 ```
 
-Listing for First Three Weeks:
+## Listing for First Three Weeks
+
+The first assignment group is designed to teach Verilog syntax for Register Transfer Level
+(RTL) design. You should plan to complete *approximately* one assignment per weekday.
+Some will go faster than others; if you complete an assignment in under one hour, you
+should continue working on the next assignment.
 
 * `1_verilog/` -- First assignment group for the semester. Assignments are organized 
   into weekly subgroups:

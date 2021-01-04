@@ -45,7 +45,12 @@ should continue working on the next assignment.
       + `3_generate/`
       + `4_case/`
       + `5_conditional/`
-
+* `2_rtl/` -- Second assignment group with weekly subgroups:
+  - `1_state_machines/`
+      + `1_keypad/`
+      + `2_debouncer/`
+      + `3_handshaking/`
+      + `4_serial_interface/`
 
 
 

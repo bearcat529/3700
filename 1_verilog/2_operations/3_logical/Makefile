@@ -5,14 +5,21 @@ all: compile elaborate simulate
 .PHONY: elaborate
 .PHONY: simulate
 
-compile: src/*.v 
-	xvlog src/*.v
+OUTFILTER=grep --color=always -e "ERROR.*" -e "CRIT.*" -e "WARN.*" 
 
-elaborate: compile 
-	xelab -debug typical -s sim testbench
 
-simulate: elaborate 
-	xsim --runall sim
+compile: src/*.v FORCE
+	@ printf "xvlog $(XVLOG_OPTIONS) src/*.v\n"
+	@! xvlog $(XVLOG_OPTIONS) src/*.v | $(OUTFILTER)
+
+elaborate: compile
+	@ printf "xelab -debug typical -s sim testbench\n"
+	@! xelab -debug typical -s sim testbench | $(OUTFILTER)
+
+simulate: elaborate
+	@ printf "xsim --runall sim\n"
+	@ xsim --runall sim
+
 
 gui: elaborate 
 	xsim --gui sim
@@ -23,8 +30,9 @@ irun:
 implement:
 	vivado -mode batch -source build.tcl
 
-html: assigned_tasks.md
-	pandoc $< -s --css=../../../3700.css --lua-filter default-code-class.lua -M default-code-class=verilog --toc -o assigned_tasks.html
+check: 
+	vivado -mode batch -source check_syntax.tcl 
+
 
 FORCE:
 

@@ -51,6 +51,9 @@ should continue working on the next assignment.
       + `2_debouncer/`
       + `3_handshaking/`
       + `4_serial_interface/`
+  - `2_communication/`
+      + `1_SPI_READ/`
+
 
 
 

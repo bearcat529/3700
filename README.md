@@ -53,6 +53,8 @@ should continue working on the next assignment.
       + `4_serial_interface/`
   - `2_communication/`
       + `1_SPI_READ/`
+      + `2_SPI_WRITE/`
+      + `3_UART_TX/`
 
 
 

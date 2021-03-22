@@ -55,6 +55,7 @@ should continue working on the next assignment.
       + `1_SPI_READ/`
       + `2_SPI_WRITE/`
       + `3_UART_TX/`
+      + `4_UART_RX/`
 
 
 

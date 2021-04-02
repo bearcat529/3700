@@ -57,6 +57,9 @@ should continue working on the next assignment.
       + `3_UART_TX/`
       + `4_UART_RX/`
       + `5_UART_bidir/`
+  - `3_memory/`
+      + `1_RAM/`
+      
 
 
 

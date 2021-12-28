@@ -14,6 +14,7 @@ module testbench ();
    wire [5:0] sum;  // "wire" type signals are controlled
                     // by the module being tested
    
+   integer clk_count = 0;   // Clock counter to keep track of elapsed time
        
    // INSTANTIATE the DEVICE UNDER TEST (DUT)
    top DUT(
@@ -69,7 +70,6 @@ module testbench ();
    end
 
    // DEFINE WHEN TO TERMINATE SIMULATION:
-   integer clk_count = 0;   
    always @(posedge clk) begin
       clk_count <= clk_count + 1;
       if (clk_count == 8) begin

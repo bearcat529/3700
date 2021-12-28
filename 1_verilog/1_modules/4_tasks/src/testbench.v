@@ -10,6 +10,8 @@ module testbench ();
    reg [7:0] q;
    reg [7:0] w;
 
+   integer clk_count = 0;   
+
    
    // INITIAL SIGNAL CONFIGURATION:
    initial begin
@@ -54,7 +56,7 @@ module testbench ();
    end
 
    // DEFINE WHEN TO TERMINATE SIMULATION:
-   integer clk_count = 0;   
+
    always @(posedge clk) begin
       clk_count <= clk_count + 1;
       if (clk_count == 8) begin

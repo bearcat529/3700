@@ -1,6 +1,9 @@
 `timescale 1ns/1ps
 
 module testbench ();
+
+   integer clk_count = 0;   
+
    
    // DECLARE SIGNALS
    reg clk;     // "reg" type signals are  controlled
@@ -45,7 +48,7 @@ module testbench ();
    end
 
    // DEFINE WHEN TO TERMINATE SIMULATION:
-   integer clk_count = 0;   
+
    always @(posedge clk) begin
       clk_count <= clk_count + 1;
       if (clk_count == 8) begin

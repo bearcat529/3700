@@ -241,7 +241,7 @@ clock 5: 0   0</code></pre>
 <h3 id="writing-to-a-text-file">Writing to a Text File</h3>
 <p>The <code class="sourceCode verilog"><span class="dt">$write</span></code> task prints text to the simulation console. To write to a text file, a similar task called <code class="sourceCode verilog"><span class="dt">$fwrite</span></code> is used like this:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="dt">integer</span> fid;                         <span class="co">// declare file reference</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">initial</span> fid = fopen(<span class="st">&quot;filename&quot;</span>,<span class="st">&quot;w&quot;</span>); <span class="co">// Open the file for writing </span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">initial</span> fid = $fopen(<span class="st">&quot;filename&quot;</span>,<span class="st">&quot;w&quot;</span>); <span class="co">// Open the file for writing </span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="kw">always</span> @(<span class="kw">posedge</span> clk) <span class="kw">begin</span></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>   <span class="co">//...//</span></span>

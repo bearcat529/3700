@@ -294,7 +294,7 @@ All user specified timing constraints are met.
 <li>Create an <strong>instance</strong> of simple_module named <code class="sourceCode verilog">SM1</code></li>
 <li><strong>Pass through</strong> the inputs <code class="sourceCode verilog">clk</code>, <code class="sourceCode verilog">en</code>, and <code class="sourceCode verilog">d</code> to <code class="sourceCode verilog">SM1</code></li>
 <li>Connect <code class="sourceCode verilog">SM1.q</code> to <code class="sourceCode verilog">_q</code></li>
-<li>Using an <strong>always</strong> block, assign <code class="sourceCode verilog">q &lt;= _q</code></li>
+<li>Using an clocked <strong>always</strong> block, assign <code class="sourceCode verilog">q &lt;= _q</code></li>
 </ul></li>
 <li>Modify <code class="sourceCode verilog">src/testbench.v</code> so that it instantiates <code class="sourceCode verilog">top</code> instead of <code class="sourceCode verilog">simple_module</code></li>
 <li>Modify <code class="sourceCode verilog">build.tcl</code>, change the <code class="sourceCode verilog">synth_design</code> line to replace <code class="sourceCode verilog">simple_module</code> with <code class="sourceCode verilog">top</code>:</li>

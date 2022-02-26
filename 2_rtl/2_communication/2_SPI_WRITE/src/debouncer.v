@@ -6,7 +6,7 @@ module debouncer
     )
    (
     input      clk,
-    input      rst_l,
+    input      rst_n,
     input      btn,
     input      done,
     output reg btn_db
@@ -19,7 +19,7 @@ module debouncer
    tcounter #(.N(N)) tc1
      (
       .clk(clk),
-      .rst_l(rst_l),
+      .rst_n(rst_n),
       .clear(clear),
       .done(t)
       );
@@ -31,8 +31,8 @@ module debouncer
       
    end
 
-   always @(posedge clk, negedge rst_l) begin
-      if (!rst_l) begin
+   always @(posedge clk, negedge rst_n) begin
+      if (!rst_n) begin
 	 state <= 0;
 	 btn_db <= 0;
 	 clear <= 1;

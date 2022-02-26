@@ -3,7 +3,7 @@
 module    spi_register 
      (
       input 	 SCLK,
-      input 	 CS,
+      input 	 CS_n,
       output reg SDO,
       input 	 SDI
       );
@@ -28,21 +28,23 @@ module    spi_register
       state = 0;      
    end
 
-   always @(negedge SCLK, posedge CS) begin
-      // CS acts like a reset:
-      if (CS) begin
+   always @(negedge SCLK, posedge CS_n) begin
+      // CS_n acts like a reset:
+      if (CS_n) begin
 	 state     <= CMD_STATE;  
 	 SDO       <= 1;         // SDO is HIGH when unused
 	 bit_index <= 7;         // Get ready to read MSB of command code
 	 cmd_code  <= 0;         // Initialize to NULL command
       end
-      // When CS goes LOW, the process starts:
+      // When CS_n goes LOW, the process starts:
       else begin
 	 case (state)
 	   CMD_STATE:
 	     begin
 		cmd_code[bit_index] <= SDI;
 		if (bit_index == 0) begin // check command code
+		   $display("Peripheral detected command code %h",{cmd_code[7:1],SDI});
+		   
 		   if ({cmd_code[7:1],SDI}==GET_CODE) begin
 		      // start writing bits immediately:
 		      SDO       <= d[15];  
@@ -83,7 +85,7 @@ module    spi_register
 	     end
 	   DONE_STATE:
 	     begin
-		// Once done, just wait until CS goes high again
+		// Once done, just wait until CS_n goes high again
 		// to reset the interface.
 		bit_index <= 7;
 		SDO       <= 1;		

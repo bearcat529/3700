@@ -4,7 +4,7 @@ module sim_spi_peripheral
   (
    input [31:0] fid,
    input 	SCLK,
-   input 	CS,
+   input 	CS_n,
    output reg 	SDO
 	);
 
@@ -23,7 +23,7 @@ module sim_spi_peripheral
 
    
    always @(negedge SCLK) begin
-      if (CS) begin // reset
+      if (CS_n) begin // reset
 	 SDO       <= 0;
 	 bit_index <= 15;
 	 
@@ -39,7 +39,7 @@ module sim_spi_peripheral
 	 word_count <= word_count + 1;
 	 
       end
-      else begin // If CS is low, send data
+      else begin // If CS_n is low, send data
 	 case (state)
 	   0:
 	     begin

@@ -8,7 +8,7 @@ module testbench ();
    
    wire SDO;
    wire SCLK;
-   wire CS;
+   wire CS_n;
 
    wire [15:0] led;
    
@@ -87,7 +87,7 @@ module testbench ();
 
       // The condition `r==0` is true with probability 1/32,
       // so this code is evaluate at random times:
-      if (!wr_btn && !rd_btn && (r == 0) && DUT.CS) begin
+      if (!wr_btn && !rd_btn && (r == 0) && DUT.CS_n) begin
 	 // The next two lines work like an "if" condition
 	 // using the r_cmd logic signal:
 	 wr_btn <= r_cmd;      // If r_cmd then wr_btn
@@ -135,15 +135,15 @@ module testbench ();
 
 
    // ----------------------------------------
-   // Detect falling edge of 'CS'
+   // Detect falling edge of 'CS_n'
    // ----------------------------------------
-   reg    CS_d;
-   wire   CS_negedge;
+   reg    CS_n_d;
+   wire   CS_n_negedge;
    
-   assign CS_negedge =  ~DUT.CS & CS_d;
+   assign CS_n_negedge =  ~DUT.CS_n & CS_n_d;
 
    always @(posedge clk) begin
-      CS_d <= DUT.CS;
+      CS_n_d <= DUT.CS_n;
    end
    // ----------------------------------------
    
@@ -154,11 +154,11 @@ module testbench ();
    reg 		rd_mode;
    always @(posedge clk) begin
       // Write PUT/GET notifications when `done` rises:
-      if (CS_negedge) begin
+      if (CS_n_negedge) begin
 	 if (DUT.rd) begin
 	    rd_mode <= 1;
 	    
-	    $write("Starting GET\n");
+	    $write("Starting GET, register contents are %H\n",DUT.memoryModel.d);
 	    $fwrite(fid,"Starting GET\n");
 	 end
 	 if (DUT.wr) begin
@@ -176,7 +176,7 @@ module testbench ();
 	    
 	 end
 	 if (wr_mode) begin
-	    $write("Completed PUT with data %H\n", sw);
+	    $write("Completed PUT with data %H, register contents now %H\n", sw, DUT.memoryModel.d);
 	    $fwrite(fid,"Completed PUT with data %H\n", sw);
 	    wr_mode <= 0;
 	    
@@ -185,7 +185,7 @@ module testbench ();
       
       // Write all SPI and handshake signal events during
       // a READ or WRITE operation:
-      if (!DUT.CS && SCLK_negedge) begin
+      if (!DUT.CS_n && SCLK_negedge) begin
 	 $write("clk: %6d\t posedge [[", clk_count);
 	 $write("rd: %b", DUT.rd);
 	 $write(" wr: %b", DUT.wr);
@@ -203,7 +203,7 @@ module testbench ();
 	 $fwrite(fid," SDI: %b", DUT.SDI);
       end
 
-      if ((!DUT.CS && SCLK_posedge) || done_posedge) begin
+      if ((!DUT.CS_n && SCLK_posedge) || done_posedge) begin
       	 $write("]]\t posedge [[ SDO: %b", DUT.SDO);
 	 $write(" led: %4x (%b) ]]", led,led);
 	 $write("\n");
@@ -219,16 +219,16 @@ module testbench ();
    // ----------------------------------------
    // DEFINE WHEN TO TERMINATE SIMULATION:
    // ----------------------------------------
-   integer CS_count;
-   initial CS_count = 0;
+   integer CS_n_count;
+   initial CS_n_count = 0;
    
    always @(posedge clk) begin
       clk_count <= clk_count + 1;
       
-      if (CS_negedge) 
-	CS_count <= CS_count + 1;
+      if (CS_n_negedge) 
+	CS_n_count <= CS_n_count + 1;
       
-      if (CS_count == 10 || clk_count == 24000) begin
+      if (CS_n_count == 10 || clk_count == 24000) begin
 	 $fclose(fid);
 	 $finish;
       end

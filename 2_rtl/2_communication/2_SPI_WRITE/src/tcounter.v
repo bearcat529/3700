@@ -6,7 +6,7 @@ module tcounter
     )
    (
     input      clk,
-    input      rst_l,
+    input      rst_n,
     input      clear,
     output reg done
     );
@@ -18,8 +18,8 @@ module tcounter
       done      = 0;      
    end
 
-   always @(posedge clk, negedge rst_l) begin
-      if (!rst_l) begin
+   always @(posedge clk, negedge rst_n) begin
+      if (!rst_n) begin
 	 done      <= 0;
 	 clk_count <= 0;	 
       end

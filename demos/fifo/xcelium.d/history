@@ -1,6 +1,0 @@
-//
-// File created by:  xrun
-// Do not modify this file
-
-s1::(02Mar2022:15:42:10):( xrun tests/test_fifo.v src/fifo.v )
-s2::(02Mar2022:15:42:21):( xrun tests/test_fifo.v src/fifo.v src/ram.v )

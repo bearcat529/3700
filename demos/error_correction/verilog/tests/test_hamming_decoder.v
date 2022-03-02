@@ -36,7 +36,7 @@ module test_hamming_decoder();
       // Loop through error cases:
       for (i=0; i<7; i=i+1) begin
          #10;          // Time delay before changing signals
-	 e    = 0;
+	 e    = 1;
          e[i] = 1;     // Inject a single error
 	 
          $strobe("%b\t%b \t%b \t%b  \t   %b      \t%b \t  %b",u,c,e,v,s,d,w);

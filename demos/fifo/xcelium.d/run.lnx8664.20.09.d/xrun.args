@@ -1,0 +1,7 @@
+//
+// File created by:  xrun
+// Do not modify this file
+//
+tests/test_fifo.v
+src/fifo.v
+src/ram.v

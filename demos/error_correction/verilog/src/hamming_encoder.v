@@ -1,15 +1,16 @@
 module hamming_encoder(u,c);
    
-  localparam K=4;
-   localparam N=7;
+   localparam K=4;  // original data bits
+   localparam N=7;  // encoded bits are what will be sent
 
 
-   input [K-1:0] u;
-   output reg [N-1:0] c;
+   input [K-1:0] u;       
+   output reg [N-1:0] c;  
 
-   wire [N-1:0]       G[K-1:0];
+   wire [N-1:0]       G[K-1:0];  // Generator matrix
 
 
+   // Use `assign` statements to define elements of G:
    assign  G[0] = 7'b0000111;
    assign  G[1] = 7'b0011001;
    assign  G[2] = 7'b0101010;

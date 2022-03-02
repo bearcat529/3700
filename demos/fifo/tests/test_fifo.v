@@ -70,9 +70,11 @@ module testbench();
 
    end
 
+   integer idx;
+   
    always @(negedge clk) begin
       if (wr_en) begin
-	$display("Clk %3d: Writing %x", clk_count, data_in);
+	 $display("Clk %3d: Writing %x", clk_count, data_in);
 	 $fwrite(write_file,"%x\n",data_in);
       end
       if (rd_en) begin
@@ -80,12 +82,19 @@ module testbench();
 	 $fwrite(read_file,"%x\n",data_out);
       end
       if (wr_en | rd_en) begin
-      $display("Clk %3d: FIFO has %d words. Full: %b, Empty: %b\twr_ptr:%d, rd_ptr:%d",clk_count,DUT.word_count,full,empty,DUT.wr_pointer,DUT.rd_pointer);
-      $display("FIFO Contents:");
-      $display("%x",DUT.mem1.mem[0]);
-      $display("%x",DUT.mem1.mem[1]);
-      $display("%x",DUT.mem1.mem[2]);
-      $display("%x",DUT.mem1.mem[3]);
+	 $display("Clk %3d: FIFO has %d words. Full: %b, Empty: %b\twr_ptr:%d, rd_ptr:%d",clk_count,DUT.word_count,full,empty,DUT.wr_pointer,DUT.rd_pointer);
+	 $display("FIFO Contents:");
+	 for (idx=0; idx<4; idx=idx+1) begin
+	    $write("%x",DUT.mem1.mem[idx]);
+	    if (DUT.wr_pointer == idx)
+	      $write(" <--w");
+	    if (DUT.rd_pointer == idx)
+	      $write(" <--r");
+	    $write("\n");
+	    
+	 end
+	 $display("--------------------");
+	 
       end
       
    end

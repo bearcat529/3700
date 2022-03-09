@@ -18,22 +18,12 @@ git fetch upstream
 git merge upstream/master
 ```
 
-## Listing for First Six Weeks
+## Listing for First Four Weeks
 
 The first assignment group is designed to teach Verilog syntax for Register Transfer Level
 (RTL) design. You should plan to complete *approximately* one assignment per weekday.
 Some will go faster than others; if you complete an assignment in under one hour, you
-should continue working on the next assignment. For most students, the pace will slow in the 
-the rtl_assignments group as the tasks become more complex. On average, you should plan 
-about 1.5 weekdays per assignment in the rtl group. 
-
-**How many hours per day?** Most students complete simple assignments within an hour, and more 
-complex RTL assignments can vary widely since there are more opportunities to get stuck. Usually 
-students can be successful when devoting at least **one hour per day, each day** to these assignments.
-If you get stuck, it is crucial to **seek help quickly and often**, and if you fall behind, **put in 
-extra time if possible to keep on schedule**. The course will be much more valuable if you keep up 
-with the assignments so that you can understand the lectures.
-
+should continue working on the next assignment.
 
 * `1_verilog/` -- First assignment group for the semester. Assignments are organized 
   into weekly subgroups:
@@ -69,6 +59,8 @@ with the assignments so that you can understand the lectures.
       + `5_UART_bidir/`
   - `3_memory/`
       + `1_RAM/`
+      + `2_sin_table/`
+      + `3_fifo`
       
 
 

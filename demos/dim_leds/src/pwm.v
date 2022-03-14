@@ -4,7 +4,7 @@ module pwm (
 	    input 	clk,
 	    input 	rst_n,
 	    input [7:0] din,
-	    output 	sout
+	    output reg 	sout
 	    );
 
    reg [7:0] 	   clk_count;

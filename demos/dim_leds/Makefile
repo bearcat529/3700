@@ -1,5 +1,5 @@
 
-all: implement
+all: compile elaborate simulate
 
 .PHONY: implement
 

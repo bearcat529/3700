@@ -1,10 +1,13 @@
 `timescale 1ns / 1ps
 
-module dim_leds(
-    input sys_clk,
+module dim_leds #(
+		  parameter N=500_000
+		  )
+   (
+    input 	  sys_clk,
     output [15:0] LED
     );
-    
+   
     // PWM signals
     reg [7:0] din;
     wire      sout;
@@ -33,11 +36,12 @@ module dim_leds(
         din      = 0;
         count    = 0;
         count_up = 1;
+        div_clk  = 0;
     end
     
     // Implement a clock divider:
     always @(posedge sys_clk) begin
-        if (count >= 500_000) begin
+        if (count >= N) begin
             count <= 0;
             div_clk <= ~div_clk;
         end

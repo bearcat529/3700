@@ -26,7 +26,7 @@ module dim_leds #(
     // Instantiate the PWM IP:
     pwm PWM1(
         .clk(sys_clk),
-	.rst_n(1),
+	.rst_n(1'b1),
         .din(din),
         .sout(sout)
      );

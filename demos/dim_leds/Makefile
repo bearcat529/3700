@@ -9,6 +9,7 @@ OUTFILTER=grep --color=always -e "ERROR.*" -e "CRIT.*" -e "WARN.*"
 compile: src/*.v FORCE
 	@ printf "xvlog $(XVLOG_OPTIONS) src/*.v\n"
 	@! xvlog $(XVLOG_OPTIONS) src/*.v | $(OUTFILTER)
+	@! xvlog $(XVLOG_OPTIONS) tests/*.v | $(OUTFILTER)
 
 elaborate: compile
 	@ printf "xelab -debug typical -s sim testbench\n"

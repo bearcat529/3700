@@ -158,7 +158,8 @@
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="kw">always</span> <span class="op">@(</span>dout<span class="op">)</span> <span class="kw">begin</span></span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>   sin_x <span class="op">=</span> adr<span class="op">/</span><span class="fl">255.0</span><span class="op">;</span></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>   sin_y <span class="op">=</span> dout<span class="op">/</span><span class="fl">255.0</span><span class="op">;</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>   <span class="dt">$display</span><span class="op">(</span><span class="st">&quot;adr %3dd  dout %3d: sin(%1.3f)=%1.3f, should be %1.3f&quot;</span><span class="op">,</span>adr<span class="op">,</span>dout<span class="op">,</span>sin_x<span class="op">,</span> sin_y<span class="op">,</span> <span class="dt">$sin</span><span class="op">(</span><span class="fl">3.14159</span>*sin_x<span class="op">/</span><span class="dv">2</span><span class="op">));</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>   <span class="dt">$write</span><span class="op">(</span><span class="st">&quot;adr %3d  dout %3d: sin(%1.3f)=%1.3f, should be %1.3f&quot;</span><span class="op">,</span>adr<span class="op">,</span>dout<span class="op">,</span>sin_x<span class="op">,</span> sin_y<span class="op">,</span> <span class="dt">$sin</span><span class="op">(</span><span class="fl">3.14159</span>*sin_x<span class="op">/</span><span class="dv">2</span><span class="op">));</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>   <span class="dt">$fwrite</span><span class="op">(</span>fid<span class="op">,</span><span class="st">&quot;adr %3d  dout %3d: sin(%1.3f)=%1.3f, should be %1.3f&quot;</span><span class="op">,</span>adr<span class="op">,</span>dout<span class="op">,</span>sin_x<span class="op">,</span> sin_y<span class="op">,</span> <span class="dt">$sin</span><span class="op">(</span><span class="fl">3.14159</span>*sin_x<span class="op">/</span><span class="dv">2</span><span class="op">));</span></span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
 <h1 id="assigned-tasks">Assigned Tasks</h1>
 <p>This is a simulation-only assignment, no build.</p>
@@ -168,9 +169,9 @@
 <li>Verify the function in simulation. You may see a slight difference between the <code class="sourceCode verilog">sin_table</code> output and the <code class="sourceCode verilog"><span class="dt">$sin</span><span class="op">()</span></code> result. This difference is due to round-off error. The first two significant figures should match.</li>
 </ol>
 <p>Turn in your work using <code class="sourceCode verilog">git</code>:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>git add src<span class="co">/*.v *.txt</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">git commit . -m &quot;Complete&quot;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">git push origin master</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>git add src/*.v *.txt sin_table.dat Makefile</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>git commit . -m &quot;Complete&quot;</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>git push origin master</span></code></pre></div>
 <p>Indicate on Canvas that your assignment is done.</p>
 </body>
 </html>

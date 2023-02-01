@@ -7,7 +7,8 @@ module top (
 	    output [6:0] seg,
 	    output 	 dp,
 	    input 	 vp,
-	    input 	 vn
+	    input 	 vn,
+	    input [1:0]  avg  // switches
 	 );
 
    wire 		 rst_n;
@@ -45,12 +46,24 @@ module top (
 			     .thousands(thousands)
 			   );
 
+   reg adc_rst_n;
+   
    adc ADC_inst (
 	     	 .clk(clk),
-	     	 .rst_n(rst_n),
+	     	 .rst_n(adc_rst_n),
 		 .vp(vp),
 		 .vn(vn),
-		 .s_out(s_out)
+		 .s_out(s_out),
+		 .avg(avg)
 		 );
 
+   always @(posedge clk) begin
+      if (!rst_n) begin
+	 adc_rst_n <= 0;
+      end
+      else begin
+	 adc_rst_n <= 1;
+      end
+   end
+   
 endmodule

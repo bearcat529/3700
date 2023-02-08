@@ -1,12 +1,15 @@
-module multiplier_mod2 (v,s);
-    parameter COLS = 7;
-    parameter ROWS = 3;
+module multiplier_mod2 
+  #(
+    parameter COLS = 7,
+    parameter ROWS = 3,
+    parameter [COLS-1:0] H [ROWS-1:0] =  '{7'b1111000, 7'b1100110,7'b1010101}
+    )
+   ( 
+    input      [COLS-1:0] v,
+    output reg [ROWS-1:0] s
+     );
    
-   parameter [COLS-1:0] H [ROWS-1:0] =  '{7'b1111000, 7'b1100110,7'b1010101};
-   
-    input      [COLS-1:0] v;
-    output reg [ROWS-1:0] s;
-   
+  
     // Loop index variables:
     reg  [7:0] i;
     reg  [7:0] j;

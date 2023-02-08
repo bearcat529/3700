@@ -9,8 +9,12 @@ module hamming_decoder(v,d,w,s);
    output     [R-1:0] s;  // Error position
 
    // Use the matrix multiplier we defined previously:
-   multiplier_mod2 MULT1(.v(v),.s(s));
-
+   parameter [N-1:0] H [R-1:0] =  '{7'b1111000, 
+				    7'b1100110,
+				    7'b1010101};
+   multiplier_mod2 #(.COLS(N),.ROWS(R),.H(H)) MULT1(.v(v),.s(s));
+   
+   
    always @(v,s) begin
        d = v;
     

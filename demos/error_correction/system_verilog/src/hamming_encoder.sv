@@ -16,9 +16,6 @@ module hamming_encoder(u,c);
    input   [K-1:0] u;
    output  [N-1:0] c;
 
-   multiplier_mod2 M1(.v(u),.s(c));
-   defparam M1.COLS = K;
-   defparam M1.ROWS = N;
-   defparam M1.H = G;
+   multiplier_mod2 #(.COLS(K),.ROWS(N),.H(G)) M1(.v(u),.s(c));
    
 endmodule

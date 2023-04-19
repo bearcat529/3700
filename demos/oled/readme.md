@@ -16,13 +16,52 @@ module is intended to simplify using the OLED in digital design projects.
 
 ## Driver Functions
 
-For basic project use, the driver supports two functions:
+For basic project use, the driver supports three functions:
 
-* Powerup initialization -- a sequence of commands and settings that properly 
-  configure the OLED.
-* Bitmap display -- a user-drawn bitmap can be pre-loaded into a RAM and 
-  uploaded to the OLED. In principle there is no limitation to the number of 
-  user bitmaps.
+* Bitmap display (activated by the `showbmp` input signal) -- a user-drawn bitmap can be pre-loaded into a RAM and 
+  uploaded to the OLED. There are four bitmap memories (these can easily be 
+  increased to provide more user bitmaps). The user needs to specify which of the four bitmaps to display
+  using the two-bit `bmp` input.
+* Character display (activated by the `showchar` input signal) -- a single character is printed on the display as
+  an 8x8 glyph positioned in a 16x4 text grid. The user needs to specify a `char_row` between 0 and 3, a `char_col`
+  between 0 and 15, and a `charval` between 33 and 126 (see the ASCII character table for appropriate codes).
+  Usually a quoted character in source code ("A") is correctly translated to the ASCII value (65). Only capital 
+  letters are supported.
+* Clear display (activated by the `clear` input signal) -- clears the display.
+
+The three commands are accessed using their corresponding input signals. Only one signal can be 
+used at a time, and should only be initiated when `ready` is high. Each signal should obey the 
+same handshake sequence, like this:
+
+```
+ready && !showchar --> ready && showchar --> !ready && showchar --> !ready && !showchar
+```
+
+## OLED Demo Design
+
+A demonstration design is provided showing how the OLED driver can be compiled within your project.
+The OLED files are provided in an `ip/` subdirectory. The `oled_demo` uses the switches to provide
+`bmp`, `char_row`, `char_col` and `charval` inputs:
+
+```
+Switches 15 down to 0:
+
+sw15 sw14 sw13 sw12 sw11 sw10 sw9  sw8  sw7  sw6  sw5  sw4  sw3  sw2  sw1  sw0
+---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+bmp1 bmp0 col3 col2 col1 col0 row1 row0 val7 val6 val5 val4 val3 val2 val1 val0
+````
+
+The buttons are mapped as follows:
+
+* `btnU` = `showchar`
+* `btnL` = `showbmp`
+* `btnR` = `clear`
+* `btnC` = `rst`
+
+`LED0` shows the `ready` output.
+
+
+# Driver Design Internals
 
 ## 4-Wire SPI Interface
 

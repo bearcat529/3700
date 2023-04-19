@@ -25,3 +25,10 @@ readme.html: readme.md
 
 
 .PHONY: oled_demo_test oledDriver_test implement
+
+clean:
+	rm -f *~
+	rm -f webtalk*
+	rm -f *.log
+	rm -f post_*
+	rm -f *.jou

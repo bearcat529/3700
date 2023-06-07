@@ -16,10 +16,12 @@ module simple_module (
 		      output reg q
 		      );
 
+   initial q=0;
+   
    always @(posedge clk) begin
       if (en)
 	q <= d;   // NON-BLOCKING ASSIGNMENT specifies D Flip Flop
       else        // The flip-flop creates a one-cycle delay before
-	q <= q;   // q is changed
+	q <= 0;   // q is changed
    end
 endmodule // simple_module

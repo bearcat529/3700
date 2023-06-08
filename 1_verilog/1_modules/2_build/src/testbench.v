@@ -29,22 +29,6 @@ module testbench ();
 
    // GENERATE CLOCK:
    initial forever #10 clk = ~clk;
-   
-   // CREATE STIMULI:
-   always @(posedge clk) begin
-      
-      // A simple state machine that cycles through
-      // all input values:
-      if ({en,d} == 2'b00)  // {en,d} CONCATENATES en,d into
-	{en,d} <= 2'b01;    // a 2-bit vector
-      else if ({en,d} == 2'b01)
-	{en,d} <= 2'b10;
-      else if ({en,d} == 2'b10)
-	{en,d} <= 2'b11;
-      else if ({en,d} == 2'b11)
-	{en,d} <= 2'b00;
-
-   end
 
    // DEFINE WHEN TO TERMINATE SIMULATION:
    integer clk_count = 0;   
@@ -54,6 +38,24 @@ module testbench ();
 	$finish;
       
    end
+   
+   // CREATE STIMULI:
+   always @(posedge clk) begin
+
+      case(clk_count)
+	2: begin
+	   d <= 1;
+	end
+	5: begin
+	   en <= 1;
+	   d<=0;
+	end
+	8: begin
+	   d<=1;
+	end
+      endcase // case (clk_count)
+   end
+
 
    // WRITE OUTPUT TO CONSOLE:
    always @(posedge clk) begin

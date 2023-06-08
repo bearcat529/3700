@@ -340,7 +340,11 @@ All user specified timing constraints are met.
 <figure>
 <img src="figures/pipeline.png" alt="" /><figcaption>Diagram of a simple logic pipeline.</figcaption>
 </figure>
-<p>To do this, follow these steps:</p>
+<p>In this pipeline, the signal <code class="sourceCode verilog">_q</code> is connected between two registers: it is the output of D Register 1, and it is the input of D Register 2. Both of these registers are controlled by the same clock signal. When the external input <code class="sourceCode verilog">d</code> changes, Register 1 locks-in the new value upon the rising edge of <code class="sourceCode verilog">clk</code>. There is some physical delay before the new value appears on <code class="sourceCode verilog">_q</code>. Register 2 will lock-in the new value upon the rising edge of <code class="sourceCode verilog">clk</code>, so <code class="sourceCode verilog">_q</code> has to stabilize before the clock rises. If <code class="sourceCode verilog">_q</code> stablizes early, the extra time is called the slack:</p>
+<figure>
+<img src="figures/timing.png" alt="" /><figcaption>Illustration of timing slack in a signal pipeline.</figcaption>
+</figure>
+<p>To change your design and implement the signal pipeline, follow these steps:</p>
 <ul>
 <li>Create a new <strong>top</strong> module in the file <code class="sourceCode verilog">src/top.v</code></li>
 <li>In <code class="sourceCode verilog">src/top.v</code>, do the following:

@@ -86,6 +86,8 @@ function check_statement_in_file() {
 	else
 	    totalScore=$(($totalScore+1))	    
 	fi
+    else
+	valid=0
     fi
 }
 

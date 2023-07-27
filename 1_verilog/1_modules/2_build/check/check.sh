@@ -37,7 +37,7 @@ missingFiles=0
 possibleScore=0
 
 function printScore() {
-    gum "Score $totalScore / 35" # $possibleScore"
+    gum style "Score $totalScore / 35" 
 }
 
 
@@ -45,7 +45,7 @@ function match_filename() {
     if [ -e $1 ]; then
 	matched_filename=$1
     else
-	gum "File $1 not found."
+	gum style "File $1 not found."
 	match_filename="No Match"
     fi
 }
@@ -56,17 +56,17 @@ function check_for_files() {
     shift
     local files=("$@")
     
-    gum "Checking for expected $category files"
+    gum style "Checking for expected $category files"
 
     for x in $(seq 0 $((${#arr[@]}-1))); do
 	match_filename ${arr[$x]}
 	possibleScore=$(($possibleScore+1))
 	
 	if [ "$matched_filename" == "No Match" ]; then
-	    gum --foreground "#F44" --strikethrough --border="none" "${sources[$x]}"
+	    gum style --foreground "#F44" --strikethrough --border="none" "${sources[$x]}"
 	    missingFiles=$(($missingFiles+1))
 	else
-	    gum --foreground "#4F4" --border="none" $matched_filename
+	    gum style --foreground "#4F4" --border="none" "$matched_filename"
 	    totalScore=$(($totalScore+1))
 	fi	
     done    
@@ -100,7 +100,7 @@ function check_bad_statement_in_file() {
 
 function check_output_files() {
     valid=1
-    gum "Examining post-route reports..."
+    gum style "Examining post-route reports..."
     check_statement_in_file "Slack (MET) :             8.536ns" "post_route_timing.rpt" "Expecting to see timing slack met with 8.536ns"
     check_statement_in_file "| IBUF     |    3 |" "post_route_utilization.rpt" "Expecting 3 IBUF primitives"
     check_statement_in_file "FDRE     |    2 |" "post_route_utilization.rpt" "Expecting 2 FDRE primitives"
@@ -117,7 +117,7 @@ function check_output_files() {
 
 function check_student_sources() {
     valid=1
-    gum "Examining source files..."
+    gum style "Examining source files..."
 
     check_statement_in_file "input[[:space:]]*clk," "src/top.v" "clk: top module should have same i/o ports as simple_module"
     check_statement_in_file "input[[:space:]]*en," "src/top.v" "en: top module should have same i/o ports as simple_module"
@@ -143,7 +143,7 @@ function check_student_sources() {
 
 function check_student_testbenches() {
     valid=1
-    gum "Examining testbench.v"
+    gum style "Examining testbench.v"
 
     check_statement_in_file "top[[:space:]]" "src/testbench.v" "Can't find instance of top module."
     check_bad_statement_in_file "simple_module" "src/testbench.v" "Testbench still has simple_module instance; should have top module"
@@ -159,7 +159,7 @@ function check_student_testbenches() {
 
 function check_student_configs() {
     valid=1
-    gum "Examining configuration files..."
+    gum style "Examining configuration files..."
 
     check_statement_in_file "\-top[[:space:]]*top" "build.tcl" "build.tcl has wrong top module"
     
@@ -178,7 +178,7 @@ function run_instructor_testbenches() {
     # Add assignment-specific tests here
     # Run instructor tests and tally "PASS"/"FAIL" outcomes
     # (there should be solution Verilog tests to do this)
-    gum "Compiling files and running verification test..."
+    gum style "Compiling files and running verification test..."
     rm -Rf xsim.dir
     possibleScore=$(($possibleScore+15))
     xvlog src/simple_module.v src/top.v
@@ -193,7 +193,7 @@ function run_instructor_testbenches() {
 		goodtests=`grep "SUCC" testlog | wc -l`
 		badtests=`grep "FAIL" testlog | wc -l`
 		totalScore=$(($totalScore+5*$goodtests))
-		gum "$goodtests out of 1 test passed"
+		gum style "$goodtests out of 1 test passed"
 	    else
 		printf "\n\033[31mERROR: simulation failed.\033[m\n"
 	    fi
@@ -218,10 +218,10 @@ check_for_files "configuration" "${configs[@]}"
 
 
 if [ $missingFiles -gt 0 ]; then
-    gum --foreground "#F44" "$missingFiles files are missing"
+    gum style --foreground "#F44" "$missingFiles files are missing"
     printf "\nMake sure all the modules have the expected names, and the filenames match the module names. Modules, tests, and output files (including bit files) should be added into the repository, committed and pushed. If you need to rename a file, use the command `git mv <filename> <newname>`\n\n"
 else
-    gum --foreground "#4F4" "All files verified"
+    gum style --foreground "#4F4" "All files verified"
 
     check_student_sources
     check_student_testbenches

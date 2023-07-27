@@ -3,6 +3,7 @@ export PATH=/opt/Xilinx/Vivado/2023.1/bin:$PATH
 
 BADCOLOR="#F44"
 GOODCOLOR="#4F4"
+FINALSCORE=35
 
 # If gum isn't available, just use printf and
 # ignore formatting options...
@@ -40,7 +41,7 @@ missingFiles=0
 possibleScore=0
 
 function printScore() {
-    gum style "Score $totalScore / $possibleScore" 
+    gum style "Score $totalScore / $FINALSCORE" 
 }
 
 function printIncrementalScore() {

@@ -87,6 +87,7 @@ function check_statement_in_file() {
 	    totalScore=$(($totalScore+1))	    
 	fi
     else
+	gum style --foreground=#400 "File $2 not found."
 	valid=0
     fi
 }

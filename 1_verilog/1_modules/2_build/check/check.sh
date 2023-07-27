@@ -1,6 +1,9 @@
 #!/bin/bash
 export PATH=/opt/Xilinx/Vivado/2023.1/bin:$PATH
 
+BADCOLOR="#F44"
+GOODCOLOR="#4F4"
+
 # If gum isn't available, just use printf and
 # ignore formatting options...
 if [ ! `which gum` ]; then
@@ -67,10 +70,10 @@ function check_for_files() {
 	possibleScore=$(($possibleScore+1))
 	
 	if [ "$matched_filename" == "No Match" ]; then
-	    gum style --foreground "#F44" --strikethrough --border="none" "${sources[$x]}"
+	    gum style --foreground $BADCOLOR --strikethrough --border="none" "${sources[$x]}"
 	    missingFiles=$(($missingFiles+1))
 	else
-	    gum style --foreground "#4F4" --border="none" "$matched_filename"
+	    gum style --foreground $GOODCOLOR --border="none" "$matched_filename"
 	    totalScore=$(($totalScore+1))
 	fi	
     done    
@@ -87,7 +90,7 @@ function check_statement_in_file() {
 	    totalScore=$(($totalScore+1))	    
 	fi
     else
-	gum style --foreground=#400 "File $2 not found."
+	gum style --foreground $BADCOLOR "File $2 not found."
 	valid=0
     fi
 }
@@ -225,10 +228,10 @@ check_for_files "configuration" "${configs[@]}"
 
 
 if [ $missingFiles -gt 0 ]; then
-    gum style --foreground "#F44" "$missingFiles files are missing"
+    gum style --foreground $BADCOLOR "$missingFiles files are missing"
     printf "\nMake sure all the modules have the expected names, and the filenames match the module names. Modules, tests, and output files (including bit files) should be added into the repository, committed and pushed. If you need to rename a file, use the command `git mv <filename> <newname>`\n\n"
 else
-    gum style --foreground "#4F4" "All files verified"
+    gum style --foreground $GOODCOLOR "All files verified"
 
     check_student_sources
     printIncrementalScore

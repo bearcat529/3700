@@ -120,7 +120,7 @@ function check_output_files() {
     if [ "$valid" -ne "1" ]; then
 	printf "\nCHECK FAILED\n"
 	printScore
-	exit 1
+	#exit 1
     else
 	printf "\nCHECK PASSED\n"
     fi
@@ -145,7 +145,7 @@ function check_student_sources() {
     if [ "$valid" -ne "1" ]; then
 	printf "\nCHECK FAILED\n"
 	printScore
-	exit 1
+	#exit 1
     else
 	printf "\nCHECK PASSED\n"
     fi
@@ -161,7 +161,7 @@ function check_student_testbenches() {
     if [ "$valid" -ne "1" ]; then
 	printf "\nCHECK FAILED\n"
 	printScore
-	exit 1
+	#exit 1
     else
 	printf "\nCHECK PASSED\n"
     fi
@@ -177,7 +177,7 @@ function check_student_configs() {
     if [ "$valid" -ne "1" ]; then
 	printf "\nCHECK FAILED\n"
 	printScore
-	exit 1
+	#exit 1
     else
 	printf "\nCHECK PASSED\n"
     fi

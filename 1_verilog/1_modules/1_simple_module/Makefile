@@ -30,9 +30,13 @@ irun:
 implement:
 	vivado -mode batch -source build.tcl
 
-check: 
+syntax: 
 	vivado -mode batch -source check_syntax.tcl 
 
+check:
+	xvlog src/*.v check/instructor_test.v
+	xelab -debug typical -s check instructor_test | $(OUTFILTER)
+	xsim --runall check
 
 FORCE:
 

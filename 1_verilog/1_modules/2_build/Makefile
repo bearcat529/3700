@@ -30,9 +30,11 @@ irun:
 implement:
 	vivado -mode batch -source build.tcl
 
-check: 
+syntax: 
 	vivado -mode batch -source check_syntax.tcl 
 
+check: FORCE
+	bash ./check/check.sh
 
 FORCE:
 

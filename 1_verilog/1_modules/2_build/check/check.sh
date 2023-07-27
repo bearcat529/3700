@@ -40,6 +40,10 @@ function printScore() {
     gum style "Score $totalScore / $possibleScore" 
 }
 
+function printIncrementalScore() {
+    printf "Incremental Score $totalScore / $possibleScore" 
+}
+
 
 function match_filename() {
     if [ -e $1 ]; then
@@ -224,9 +228,17 @@ else
     gum style --foreground "#4F4" "All files verified"
 
     check_student_sources
+    printIncrementalScore
+    
     check_student_testbenches
+    printIncrementalScore
+    
     check_student_configs
+    printIncrementalScore
+    
     check_output_files
+    printIncrementalScore
+    
     run_instructor_testbenches
 
 fi

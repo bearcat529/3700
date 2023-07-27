@@ -37,7 +37,7 @@ missingFiles=0
 possibleScore=0
 
 function printScore() {
-    gum style "Score $totalScore / 35" 
+    gum style "Score $totalScore / $possibleScore" 
 }
 
 

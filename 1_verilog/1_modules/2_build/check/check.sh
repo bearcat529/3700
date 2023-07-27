@@ -41,7 +41,7 @@ function printScore() {
 }
 
 function printIncrementalScore() {
-    printf "Incremental Score $totalScore / $possibleScore" 
+    printf "\nIncremental Score: $totalScore / $possibleScore\n" 
 }
 
 

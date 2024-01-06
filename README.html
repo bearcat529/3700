@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>README: ECE 3700</title>
+  <title>README</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -83,84 +83,63 @@
   <![endif]-->
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">README: ECE 3700</h1>
-</header>
-<nav id="TOC" role="doc-toc">
-<ul>
-<li><a href="#assignments">Assignments:</a>
-<ul>
-<li><a href="#listing-for-first-four-weeks">Listing for First Four Weeks</a></li>
-</ul></li>
-</ul>
-</nav>
-<p>This repository contains all the assignments for ECE 3700. It is updated periodically.</p>
+<p>This repository contains all the assignments for ECE 3700. It is
+updated periodically.</p>
 <p>File list (root directory):</p>
 <ul>
 <li><code>README.md</code> – Markdown version of README file</li>
 <li><code>README.html</code> – HTML version</li>
 <li><code>3700.css</code> – CSS style for HTML documents</li>
-<li><code>Basys3_Master.xdc</code> – Constraint file template for Basys3 board</li>
-<li><code>workflows/</code> – instructions for downloading, completing and uploading assignments.</li>
+<li><code>Basys3_Master.xdc</code> – Constraint file template for Basys3
+board</li>
+<li><code>workflows/</code> – instructions for downloading, completing
+and uploading assignments.</li>
 </ul>
 <h1 id="assignments">Assignments:</h1>
-<p>Assignments in the file tree below are updated periodically. You should sync new updates by running these commands from within this directory in the terminal:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch upstream</span>
+<p>Assignments in the file tree below are updated periodically. You
+should sync new updates by running these commands from within this
+directory in the terminal:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch upstream</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge upstream/master</span></code></pre></div>
 <h2 id="listing-for-first-four-weeks">Listing for First Four Weeks</h2>
-<p>The first assignment group is designed to teach Verilog syntax for Register Transfer Level (RTL) design. You should plan to complete <em>approximately</em> one assignment per weekday. Some will go faster than others; if you complete an assignment in under one hour, you should continue working on the next assignment.</p>
-<ul>
-<li><code>1_verilog/</code> – First assignment group for the semester. Assignments are organized into weekly subgroups:
-<ul>
-<li><code>1_modules/</code>
-<ul>
-<li><code>1_simple_module/</code></li>
-<li><code>2_build/</code></li>
-<li><code>3_parameters/</code></li>
-<li><code>4_tasks/</code></li>
-<li><code>5_functions/</code></li>
-</ul></li>
-<li><code>2_operations/</code>
-<ul>
-<li><code>1_unary/</code></li>
-<li><code>2_bitwise/</code></li>
-<li><code>3_logical/</code></li>
-<li><code>4_unsigned/</code></li>
-<li><code>5_signed/</code></li>
-</ul></li>
-<li><code>3_loops_conditionals/</code>
-<ul>
-<li><code>1_for_loops/</code></li>
-<li><code>2_while_loops/</code></li>
-<li><code>3_generate/</code></li>
-<li><code>4_case/</code></li>
-<li><code>5_conditional/</code></li>
-</ul></li>
-</ul></li>
-<li><code>2_rtl/</code> – Second assignment group with weekly subgroups:
-<ul>
-<li><code>1_state_machines/</code>
-<ul>
-<li><code>1_keypad/</code></li>
-<li><code>2_debouncer/</code></li>
-<li><code>3_handshaking/</code></li>
-<li><code>4_serial_interface/</code></li>
-</ul></li>
-<li><code>2_communication/</code>
-<ul>
-<li><code>1_SPI_READ/</code></li>
-<li><code>2_SPI_WRITE/</code></li>
-<li><code>3_UART_TX/</code></li>
-<li><code>4_UART_RX/</code></li>
-<li><code>5_UART_bidir/</code></li>
-</ul></li>
-<li><code>3_memory/</code>
-<ul>
-<li><code>1_RAM/</code></li>
-<li><code>2_sin_table/</code></li>
-<li><code>3_fifo</code></li>
-</ul></li>
-</ul></li>
-</ul>
+<p>The first assignment group is designed to teach Verilog syntax for
+Register Transfer Level (RTL) design. You should plan to complete
+<em>approximately</em> one assignment per weekday. Some will go faster
+than others; if you complete an assignment in under one hour, you should
+continue working on the next assignment.</p>
+<pre><code>├── 1_verilog
+│   ├── 1_modules
+│   │   ├── 1_simple_module
+│   │   ├── 2_build
+│   │   ├── 3_parameters
+│   │   ├── 4_tasks
+│   │   └── 5_functions
+│   ├── 2_operations
+│   │   ├── 1_unary
+│   │   ├── 2_bitwise
+│   │   ├── 3_logical
+│   │   ├── 4_unsigned
+│   │   └── 5_signed
+│   └── 3_loops_conditionals
+│       ├── 1_for_loops
+│       ├── 2_while_loops
+│       ├── 3_generate
+│       ├── 4_case
+│       └── 5_conditional
+└── 2_rtl
+    ├── 1_state_machines
+    │   ├── 1_keypad
+    │   ├── 2_debouncer
+    │   ├── 3_handshaking
+    │   └── optional
+    ├── 2_communication
+    │   ├── 1_PWM
+    │   ├── 2_SPI_READ
+    │   └── optional
+    ├── 3_memory
+    │   ├── 1_RAM
+    │   ├── 2_sin_table
+    │   └── 3_fifo</code></pre>
 </body>
 </html>

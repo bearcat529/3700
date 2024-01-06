@@ -25,44 +25,39 @@ The first assignment group is designed to teach Verilog syntax for Register Tran
 Some will go faster than others; if you complete an assignment in under one hour, you
 should continue working on the next assignment.
 
-* `1_verilog/` -- First assignment group for the semester. Assignments are organized 
-  into weekly subgroups:
-  - `1_modules/`  
-      + `1_simple_module/`
-      + `2_build/`
-      + `3_parameters/`
-      + `4_tasks/`
-      + `5_functions/`
-  - `2_operations/`
-      + `1_unary/`
-      + `2_bitwise/`
-      + `3_logical/`
-      + `4_unsigned/`
-      + `5_signed/`
-  - `3_loops_conditionals/`
-      + `1_for_loops/`
-      + `2_while_loops/`
-      + `3_generate/`
-      + `4_case/`
-      + `5_conditional/`
-* `2_rtl/` -- Second assignment group with weekly subgroups:
-  - `1_state_machines/`
-      + `1_keypad/`
-      + `2_debouncer/`
-      + `3_handshaking/`
-      + `4_serial_interface/`
-  - `2_communication/`
-      + `1_SPI_READ/`
-      + `2_SPI_WRITE/`
-      + `3_UART_TX/`
-      + `4_UART_RX/`
-      + `5_UART_bidir/`
-  - `3_memory/`
-      + `1_RAM/`
-      + `2_sin_table/`
-      + `3_fifo`
-      
-
-
-
+```
+├── 1_verilog
+│   ├── 1_modules
+│   │   ├── 1_simple_module
+│   │   ├── 2_build
+│   │   ├── 3_parameters
+│   │   ├── 4_tasks
+│   │   └── 5_functions
+│   ├── 2_operations
+│   │   ├── 1_unary
+│   │   ├── 2_bitwise
+│   │   ├── 3_logical
+│   │   ├── 4_unsigned
+│   │   └── 5_signed
+│   └── 3_loops_conditionals
+│       ├── 1_for_loops
+│       ├── 2_while_loops
+│       ├── 3_generate
+│       ├── 4_case
+│       └── 5_conditional
+└── 2_rtl
+    ├── 1_state_machines
+    │   ├── 1_keypad
+    │   ├── 2_debouncer
+    │   ├── 3_handshaking
+    │   └── optional
+    ├── 2_communication
+    │   ├── 1_PWM
+    │   ├── 2_SPI_READ
+    │   └── optional
+    ├── 3_memory
+    │   ├── 1_RAM
+    │   ├── 2_sin_table
+    │   └── 3_fifo
+```
 

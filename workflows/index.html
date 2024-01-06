@@ -88,11 +88,7 @@
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#required-git-version">Required git Version</a>
-<ul>
-<li><a href="#updating-on-redhatcentos-7">Updating on RedHat/CentOS
-7</a></li>
-</ul></li>
+<li><a href="#required-git-version">Required git Version</a></li>
 <li><a href="#quick-reference-and-summary">Quick Reference and
 Summary</a></li>
 <li><a href="#working-in-the-terminal">Working in the Terminal</a></li>
@@ -136,20 +132,6 @@ and run</p>
 <pre><code>git --version</code></pre>
 <p>If the version is earlier than 2.25.0, then you need to install a
 more recent release of <code>git</code>.</p>
-<h2 id="updating-on-redhatcentos-7">Updating on RedHat/CentOS 7</h2>
-<p>If you are using a Linux OS based on Red Hat 7 (like the ECE External
-USB drive), then you can follow the procedure below to update your git
-version. These commands require superuser permission (the user
-<code>student</code> has superuser permissions on the ECE USB
-drive).</p>
-<pre><code>sudo yum -y remove git
-sudo yum -y remove git-*
-sudo yum -y install https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.9-1.x86_64.rpm
-sudo yum -y install git</code></pre>
-<p>Once these commands complete successfully, check the version
-again:</p>
-<pre><code>git --version</code></pre>
-<p>You should see version 2.34.1 or higher.</p>
 <h1 id="quick-reference-and-summary">Quick Reference and Summary</h1>
 <p>In this course you will receive assignments and submit work using a
 <strong>git repository</strong>.</p>
@@ -293,41 +275,41 @@ on the server, use <code>ssh</code> to access one of the available
 servers. You will probably want to use the same server throughout the
 semester, however you can change at any time by repeating this step to
 establish a new clone:</p>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://<span class="op">&lt;</span>username<span class="op">&gt;</span>:<span class="op">&lt;</span>password<span class="op">&gt;</span>@left.engr.usu.edu/git/<span class="op">&lt;</span>username<span class="op">&gt;</span>/3700 </span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://<span class="op">&lt;</span>username<span class="op">&gt;</span>:<span class="op">&lt;</span>password<span class="op">&gt;</span>@left.engr.usu.edu/git/<span class="op">&lt;</span>username<span class="op">&gt;</span>/3700 </span></code></pre></div>
 <p>Replace <code>&lt;username&gt;</code> with your account name and
 <password> with your provided password. This will create a new directory
 named <code>3700</code>. Next, navigate into the newly created
 <code>3700</code> directory, and run this command to define the
 <code>upstream</code> repository:</p>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add upstream https://<span class="op">&lt;</span>username<span class="op">&gt;</span>:<span class="op">&lt;</span>password<span class="op">&gt;</span>@left.engr.usu.edu/git/3700</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch upstream</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge upstream/master</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add upstream https://<span class="op">&lt;</span>username<span class="op">&gt;</span>:<span class="op">&lt;</span>password<span class="op">&gt;</span>@left.engr.usu.edu/git/3700</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch upstream</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge upstream/master</span></code></pre></div>
 <p>This will bring your fork up to date with the instructor’s public
 repository.</p>
 <h2 id="daily-synchronization">Daily Synchronization</h2>
 <p>Each time you sit down to do work for ECE 3700, you should run these
 commands:</p>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull origin master </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch upstream</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge upstream/master</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull origin master </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> fetch upstream</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge upstream/master</span></code></pre></div>
 <p>This will synchronize any updates from the instructor.</p>
 <h2 id="hourly-synchronization">Hourly(+) Synchronization</h2>
 <p>After making significant changes to your clone, you should
 synchronize them with the server using these commands:</p>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-a</span> <span class="at">-m</span> <span class="st">&quot;&lt;description of changes&gt;&quot;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin master</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-a</span> <span class="at">-m</span> <span class="st">&quot;&lt;description of changes&gt;&quot;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin master</span></code></pre></div>
 <h2 id="managing-repository-files">Managing Repository Files</h2>
 <p>Any time you <strong>create a file</strong> you should
 <code>add</code> it to the repository:</p>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="op">&lt;</span>filename<span class="op">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="op">&lt;</span>filename<span class="op">&gt;</span></span></code></pre></div>
 <p>You can check the status of all files in a directory by running</p>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status .</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status .</span></code></pre></div>
 <p>It’s okay to have some un-tracked files in your clone. Make sure to
 add all source files (<code>*.v</code>, <code>*.xdc</code>), and
 bitstream files (<code>*.bit</code>) since the instructor will need to
@@ -337,9 +319,9 @@ tracked files, you should do so using the <code>git</code> commands;
 <strong>DON’T USE THE FILE BROWSER TO MOVE OR DELETE TRACKED
 FILES</strong>. You can use ordinary <code>mv</code> and <code>rm</code>
 commands for untracked files, otherwise use these:</p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> mv <span class="op">&lt;</span>old filename<span class="op">&gt;</span> <span class="op">&lt;</span>new filename<span class="op">&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rm <span class="op">&lt;</span>filename<span class="op">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> mv <span class="op">&lt;</span>old filename<span class="op">&gt;</span> <span class="op">&lt;</span>new filename<span class="op">&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rm <span class="op">&lt;</span>filename<span class="op">&gt;</span></span></code></pre></div>
 <h1 id="programming-the-basys3-board">Programming the Basys3 Board</h1>
 <p>There are two ways to program the board.</p>
 <h2 id="method-1-vivado-hardware-manager">Method 1: Vivado Hardware
@@ -369,17 +351,17 @@ USB programming.</p>
 directory where you need help and create a text file called
 <code>help</code>. Type a <strong>detailed description of your
 problem</strong> and save the file. Then add it to the repository:</p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add help</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit . <span class="at">-m</span> <span class="st">&quot;Requesting help&quot;</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin master</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add help</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit . <span class="at">-m</span> <span class="st">&quot;Requesting help&quot;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin master</span></code></pre></div>
 <p>You can separately notify a TA or instructor about your help request,
 then they can sync your repository and read the details in your
 <code>help</code> file. The instructor’s responses should be appended to
 the <code>help</code> file, and the TA/instructor may edit files within
 your design. To retrieve updates, pull from the server:</p>
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull origin master</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull origin master</span></code></pre></div>
 <p>If the instructor has handled your question, you should see updates
 in the <code>help</code> file and possibly other files if they were
 involved in the help request.</p>

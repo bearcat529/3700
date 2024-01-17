@@ -34,7 +34,7 @@ module testbench ();
    integer clk_count = 0;   
    always @(posedge clk) begin
       clk_count <= clk_count + 1;
-      if (clk_count == 8)
+      if (clk_count == 10)
 	$finish;
       
    end
@@ -45,15 +45,18 @@ module testbench ();
       // A simple state machine that cycles through
       // all input values:
 
-      if ({en,d} == 2'b00)  // {en,d} CONCATENATES en,d into
-	{en,d} <= 2'b01;    // a 2-bit vector
-      else if ({en,d} == 2'b01)
-	{en,d} <= 2'b10;
-      else if ({en,d} == 2'b10)
-	{en,d} <= 2'b11;
-      else if ({en,d} == 2'b11)
-	{en,d} <= 2'b00;
-      
+  //    if ({en,d} == 2'b00)  // {en,d} CONCATENATES en,d into
+//	{en,d} <= 2'b01;    // a 2-bit vector
+  //    else if ({en,d} == 2'b01)
+//	{en,d} <= 2'b10;
+  //    else if ({en,d} == 2'b10)
+//	{en,d} <= 2'b11;
+ //     else if ({en,d} == 2'b11)
+//	{en,d} <= 2'b00;
+	
+	en<=d;
+	d<= ~en;
+
    end
 
 
@@ -65,6 +68,16 @@ module testbench ();
       $write("\tq: %b", q);
       $write("\n");      
    end
+   // WRITE OUTPUT TO FILE
+   integer fid;
+   initial fid = $fopen("test_result.txt","w");
 
+   always @(posedge clk) begin
+      $fwrite(fid,"clk: %d",clk_count);
+      $fwrite(fid,"\ten: %b", en);
+      $fwrite(fid,"\td: %b", d);
+      $fwrite(fid,"\tq: %b", q);
+      $fwrite(fid,"\n");
+   end
    
 endmodule // testbench

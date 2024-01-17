@@ -34,7 +34,8 @@ module testbench ();
    integer clk_count = 0;   
    always @(posedge clk) begin
       clk_count <= clk_count + 1;
-      if (clk_count == 8)
+//      if (clk_count == 8)
+        if (clk_count == 12)
 	$finish;
       
    end

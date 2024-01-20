@@ -1,14 +1,15 @@
 `timescale 1ns/1ps
 
 module testbench ();
-   
+ //  `include "inc/reverse_bits_task.v"
+
    // DECLARE SIGNALS
    reg clk;     // "reg" type signals are  controlled
    reg [7:0] a;  // by the testbench
    reg [7:0] b;  // by the testbench
 
-   reg [7:0] q;
-   reg [7:0] w;
+   wire [7:0] q;
+   wire [7:0] w;
 
    integer clk_count = 0;   
 
@@ -29,14 +30,18 @@ module testbench ();
       b <= $random();
    end
 
-   
-   integer idx;
-   always @(*) begin
-      for (idx=0; idx<8; idx=idx+1) begin
-	 q[7-idx] = a[idx];
-	 w[7-idx] = b[idx];
-      end
-   end
+  
+  reverse_bits_module UUT(.a(a),.b(b),.q(q),.w(w));
+
+//   integer idx;
+//   always @(a,b) begin
+//      for (idx=0; idx<8; idx=idx+1) begin
+//	 q[7-idx] = a[idx];
+//	 w[7-idx] = b[idx];
+//        reverse_bits_task(.in(a),.out(q));
+//	reverse_bits_task(.in(b),.out(w));
+      
+//   end
 
 
    // WRITE OUTPUT TO CONSOLE:
@@ -64,6 +69,17 @@ module testbench ();
 	 $finish;
       end
    end
+//task automatic reverse_bits_task;
+//	input [7:0] in;
+//	output [7:0] out;
+//	
+//	integer idx;
+//	begin
+//		for (idx=0; idx<8; idx=idx+1) begin
+//			out[7-idx] = in[idx];
+//		end
+//	end
+//endtask
 
    
 endmodule // testbench

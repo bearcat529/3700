@@ -6,7 +6,7 @@ title: "Operations Demo: ambiguity of initial conditions"
 
 In this demonstration, I wanted to show a simple operation:
 
-```{Verilog}
+```{verilog}
 initial begin
   a  = 8'd2;
   b  = 8'd3;
@@ -25,7 +25,7 @@ end
 **Problem:** Will the `always` block be evaluated as part of the
 initial conditions?
 
-```{Verilog}
+```{verilog}
 initial begin
   a  = 8'd2;
   b  = 8'd3;
@@ -96,7 +96,7 @@ combinational block evaluated
 For a portable solution that has the same result in every tool,
 **duplicate any combinational assignments into the initial block.**
 
-```{Verilog}
+```{verilog}
 initial begin
   a  = 8'd2;
   b  = 8'd3;

@@ -55,6 +55,9 @@ module testbench ();
       //$write("\ta&b: %b", a&b);
       //$write("\ta|b: %b", a|b);
       //$write("\ta^b: %b", a^b);
+      //$write("\tNAND: %b, ~(a&b))
+      //$write("\tNOR: %b, ~(a|b));
+      //
       $write("\n");
       
       $fwrite(fid,"clk:  %d", clk_count);      

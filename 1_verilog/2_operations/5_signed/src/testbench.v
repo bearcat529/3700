@@ -24,7 +24,7 @@ module testbench ();
       clk = 0;     
       count = 0; 
       a   = 0;
-      b   = 19;
+      b   = -19;
       up = 1;
       dn = 0;
       rst = 1;

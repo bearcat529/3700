@@ -1,6 +1,6 @@
 # Load sources
 read_verilog [ glob src/*.v ]
-read_xdc add_bits.xdc
+read_xdc Basys3_Master.xdc
 
 # Run Synthesis
 

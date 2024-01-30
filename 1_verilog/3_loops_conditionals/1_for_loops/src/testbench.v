@@ -5,24 +5,31 @@ module testbench ();
    // DECLARE SIGNALS
    reg clk;      // "reg" signals are  controlled
    reg [7:0] a;  // by the testbench
-   reg [7:0] b;  
-
+   reg load;  
+   wire [3:0] q;
+   
+   top UUT(.a(a), .clk(clk), .q(q),.load(load));
+   
    integer clk_count = 0;   
    
    // INITIAL SIGNAL CONFIGURATION:
    initial begin
       clk = 0;      
-      a   = 0;
-      b   = 0;
+      a   = 8'b11111111;
+      load = 1;
+
    end
 
+   
    // GENERATE CLOCK:
    initial forever #10 clk = ~clk;
    
    // CREATE STIMULI:
    always @(posedge clk) begin
       a <= $random();
-      b <= $random();
+      //if(clk_count%2==0)
+	//      load =~load;
+
    end
 
    
@@ -34,12 +41,12 @@ module testbench ();
    always @(posedge clk) begin
       $write("clk:  %d", clk_count);      
       $write("\ta:  %b", a);
-      $write("\tb:  %b", b);
+      $write("\tq:  %b", q);
       $write("\n");
       
       $fwrite(fid,"clk:  %d", clk_count);      
       $fwrite(fid,"\ta:  %b", a);
-      $fwrite(fid,"\tb:  %b", b);
+      $fwrite(fid,"\tq:  %b", q);
       $fwrite(fid,"\n");
    end
 

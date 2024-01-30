@@ -23,8 +23,8 @@ module testbench ();
    initial begin
       clk = 0;     
       count = 0; 
-      a   = 0;
-      b   = -19;
+      a   = 53;
+      b   = 13;
       up = 1;
       dn = 0;
       rst = 1;
@@ -37,14 +37,29 @@ module testbench ();
    always @(posedge clk) begin
       //a <= $random();
       //b <= $random();
-      if (count == 3)
+      if (count == 3||count == 23||count==43||count==63 )
 	      rst <= 0;
-      if (count == 21)begin
-	      b = 30;
+      if (count == 20)begin
+	     a<= -17;
+	     b <= 37;
 	      up<=0;
       	      dn<=1;
+	      rst <=1;
       end
-      	   
+      if (count == 40) begin
+	      a<= 29;
+             b <= -17;
+              up<=1;
+              dn<=0;
+              rst <=1;
+      end
+      if (count == 60) begin
+	      a<= -47;
+             b <= -43;
+              up<=0;
+              dn<=1;
+              rst <=1;
+      end
 	count <= count + 1;
    end
 
@@ -71,7 +86,7 @@ module testbench ();
    // DEFINE WHEN TO TERMINATE SIMULATION:
    always @(posedge clk) begin
       clk_count <= clk_count + 1;
-      if (clk_count == 40) begin
+      if (clk_count ==80) begin
 	 $fclose(fid);
 	 $finish;
       end

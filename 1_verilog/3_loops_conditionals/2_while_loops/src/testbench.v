@@ -1,7 +1,8 @@
 `timescale 1ns/1ps
 
-`define K 4
+`define K 5
 `define W 2**`K-1
+
 
 module testbench ();
    
@@ -18,13 +19,16 @@ module testbench ();
       .a(a),
       .q(b)
       );
+        defparam TE1.W = `W;
+	defparam TE1.K = `K;
    
    thermometer_decoder TD1
      (
       .a(b),
       .q(c)
       );
-
+	defparam TD1.W = `W;
+	defparam TD1.K = `K;
    
    // INITIAL SIGNAL CONFIGURATION:
    initial begin

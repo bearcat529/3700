@@ -48,7 +48,7 @@ module testbench ();
    // CREATE STIMULI:
    always @(posedge clk) begin
       sw <= sw+1;
-      if(clk_count == 9)begin
+      if(clk_count == 128) begin
 	      sw <= 0;
 	      sel = 1;
       end
@@ -77,7 +77,7 @@ module testbench ();
    // DEFINE WHEN TO TERMINATE SIMULATION:
    always @(posedge clk) begin
       clk_count <= clk_count + 1;
-      if (clk_count == 32) begin
+      if (clk_count == 257) begin
 	 $fclose(fid);
 	 $finish;
       end

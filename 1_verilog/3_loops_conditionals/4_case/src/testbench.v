@@ -7,19 +7,20 @@ module testbench ();
    reg signed [3:0] A;  
    reg signed [3:0] B;  
    reg        [1:0] sel;
-
+	
+   reg overflow_check;
    wire signed [3:0] Q;
    wire              overflow;
    
    integer clk_count = 0;   
-
+   reg [9:0] count;
    // DEVICE UNDER TEST
    arithmetic_unit DUT
      (
       .A(A),
       .B(B),
       .sel(sel),
-      .q(Q),
+     .Q(Q),
       .overflow(overflow)
       );
    
@@ -30,7 +31,9 @@ module testbench ();
       clk = 0;      
       A   = 0;
       B   = 0;
-      sel = 0;      
+      sel = 0;     
+     count = 0;
+
    end
 
    // GENERATE CLOCK:
@@ -38,7 +41,12 @@ module testbench ();
    
    // CREATE STIMULI:
    always @(posedge clk) begin
-      // put your assignments here
+      
+	sel = count[1:0];
+      A = count [5:2];
+      B = count [9:6];
+      
+      count = count +1;
    end
 
    
@@ -68,7 +76,7 @@ module testbench ();
    // DEFINE WHEN TO TERMINATE SIMULATION:
    always @(posedge clk) begin
       clk_count <= clk_count + 1;
-      if (clk_count == 8) begin
+      if (clk_count == 1024) begin
 	 $fclose(fid);
 	 $finish;
       end

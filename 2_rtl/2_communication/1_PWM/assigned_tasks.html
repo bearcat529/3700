@@ -8,12 +8,21 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -50,7 +59,7 @@
     code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
     code span.at { color: #7d9029; } /* Attribute */
     code span.bn { color: #40a070; } /* BaseN */
-    code span.bu { } /* BuiltIn */
+    code span.bu { color: #008000; } /* BuiltIn */
     code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #4070a0; } /* Char */
     code span.cn { color: #880000; } /* Constant */
@@ -63,7 +72,7 @@
     code span.ex { } /* Extension */
     code span.fl { color: #40a070; } /* Float */
     code span.fu { color: #06287e; } /* Function */
-    code span.im { } /* Import */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
     code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
     code span.kw { color: #007020; font-weight: bold; } /* Keyword */
     code span.op { color: #666666; } /* Operator */
@@ -75,9 +84,26 @@
     code span.va { color: #19177c; } /* Variable */
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="../../../3700.css" />
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
@@ -85,25 +111,32 @@
 <body>
 <nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#pmod-amp2-pinout">Pmod AMP2 Pinout</a></li>
-<li><a href="#how-pwm-works">How PWM works</a>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#pmod-amp2-pinout" id="toc-pmod-amp2-pinout">Pmod AMP2
+Pinout</a></li>
+<li><a href="#how-pwm-works" id="toc-how-pwm-works">How PWM works</a>
 <ul>
-<li><a href="#the-pwm-modules-behavior">The PWM module’s
-behavior</a></li>
-<li><a href="#led-dimmer">LED Dimmer</a></li>
+<li><a href="#the-pwm-modules-behavior"
+id="toc-the-pwm-modules-behavior">The PWM module’s behavior</a></li>
+<li><a href="#led-dimmer" id="toc-led-dimmer">LED Dimmer</a></li>
 </ul></li>
-<li><a href="#part-2-audio-signal-generation">Part 2: Audio Signal
+<li><a href="#part-2-audio-signal-generation"
+id="toc-part-2-audio-signal-generation">Part 2: Audio Signal
 Generation</a>
 <ul>
-<li><a href="#pwm-square-wave-tones">PWM Square-Wave Tones</a></li>
-<li><a href="#top-module-design">Top Module Design</a></li>
-<li><a href="#gain-and-shutdown_l-outputs">Gain and Shutdown_l
+<li><a href="#pwm-square-wave-tones" id="toc-pwm-square-wave-tones">PWM
+Square-Wave Tones</a></li>
+<li><a href="#top-module-design" id="toc-top-module-design">Top Module
+Design</a></li>
+<li><a href="#gain-and-shutdown_l-outputs"
+id="toc-gain-and-shutdown_l-outputs">Gain and Shutdown_l
 outputs</a></li>
-<li><a href="#constraining-the-design">Constraining the Design</a></li>
-<li><a href="#connecting-the-pmod-amp2">Connecting the Pmod
-AMP2</a></li>
-<li><a href="#synthesize-implement-program-test">Synthesize, Implement,
+<li><a href="#constraining-the-design"
+id="toc-constraining-the-design">Constraining the Design</a></li>
+<li><a href="#connecting-the-pmod-amp2"
+id="toc-connecting-the-pmod-amp2">Connecting the Pmod AMP2</a></li>
+<li><a href="#synthesize-implement-program-test"
+id="toc-synthesize-implement-program-test">Synthesize, Implement,
 Program, Test</a></li>
 </ul></li>
 </ul>
@@ -137,7 +170,7 @@ module, it is NOT a pin label.</p>
 will be filtered by the module.</li>
 <li><strong>Gain</strong> – digital gain select. High-volume mode when
 low, normal-mode when high.</li>
-<li><strong><span class="math inline">∼</span>Shutdown</strong> –
+<li><strong><span class="math inline">\sim</span>Shutdown</strong> –
 shutdown the module when this is zero, to save power or mute the
 output.</li>
 </ul>
@@ -148,7 +181,7 @@ filter</span>. The word “passive” means that it consists only resistors
 and capacitors. The phrase “low-pass filter” means that it smooths out
 fast switching signals, leaving only the average signal value.</p>
 <p>This animation illustrates the concept:</p>
-<p><object data="figures/pwm_animation.svg"></object></p>
+<p><img src="figures/pwm_animation.svg" /></p>
 <p>We can convey a signal by varying the pulse widths <span
 class="alert">as long as the signal bandwidth is much lower than the
 pulse frequency.</span> In other words, if the signal changes very
@@ -162,8 +195,8 @@ the fast-changing pulses.</p>
 <li>Dimming LED lighting</li>
 <li>Audio encoding</li>
 <li>Servo motor positioning (for example, an angle between <span
-class="math inline">0<sup>∘</sup></span> to <span
-class="math inline">180<sup>∘</sup></span> is communicated via PWM)</li>
+class="math inline">0^\circ</span> to <span
+class="math inline">180^\circ</span> is communicated via PWM)</li>
 </ul>
 <p>In this lab, you will...</p>
 <ul>
@@ -196,66 +229,65 @@ class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb1-1"><a 
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> dim_leds<span class="op">(</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">input</span>         sys_clk<span class="op">,</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">output</span> <span class="op">[</span><span class="dv">15</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span> LED<span class="op">,</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">output</span> <span class="op">[</span><span class="dv">3</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span>  an<span class="op">,</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">output</span> <span class="op">[</span><span class="dv">6</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span>  seg</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">);</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// PWM signals</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">reg</span> <span class="op">[</span><span class="dv">7</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span> din<span class="op">;</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">wire</span>      sout<span class="op">;</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Signals for clock divider:</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">integer</span>   count<span class="op">;</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">reg</span>       div_clk<span class="op">;</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">// State variable:</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">reg</span>       count_up<span class="op">;</span> <span class="co">// brighten (1) or dim (0)</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Assign all LEDs to equal the PWM signal</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">assign</span> LED <span class="op">=</span> <span class="op">{</span><span class="dv">16</span><span class="op">{</span>sout<span class="op">}};</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Instantiate the PWM:</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    pwm_0 MOD1<span class="op">(</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        .clk<span class="op">(</span>sys_clk<span class="op">),</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        .din<span class="op">(</span>din<span class="op">),</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        .sout<span class="op">(</span>sout<span class="op">)</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>     <span class="op">);</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Initialize reg signals</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">initial</span> <span class="kw">begin</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        din <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        count_up <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co">// Implement a clock divider:</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="kw">always</span> <span class="op">@(</span><span class="kw">posedge</span> sys_clk<span class="op">)</span> <span class="kw">begin</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="op">(</span>count <span class="op">&gt;=</span> 500_000<span class="op">)</span> <span class="kw">begin</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>            count <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>            div_clk <span class="op">&lt;=</span> <span class="op">~</span>div_clk<span class="op">;</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>        <span class="kw">end</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>        <span class="kw">else</span> </span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>            count <span class="op">&lt;=</span> count <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Main brighten/dim process:</span></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    <span class="kw">always</span> <span class="op">@(</span><span class="kw">posedge</span> div_clk<span class="op">)</span> <span class="kw">begin</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Adjust the PWM brightness level</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="op">(</span>count_up<span class="op">)</span></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>           din <span class="op">&lt;=</span> din <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>        <span class="kw">else</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>           din <span class="op">&lt;=</span> din <span class="op">-</span> <span class="dv">1</span><span class="op">;</span>       </span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>           </span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>       <span class="co">// If we&#39;ve reach maximum brightness, start dimming.</span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>       <span class="co">// If we&#39;ve reached minimum brightness, start brightening.</span></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>       <span class="kw">if</span> <span class="op">((</span>count_up<span class="op">)&amp;&amp;(</span>din <span class="op">==</span> <span class="dv">254</span><span class="op">))</span> </span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>          count_up <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">;</span>            </span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>       <span class="kw">else</span> <span class="kw">if</span> <span class="op">((~</span>count_up<span class="op">)&amp;&amp;(</span>din<span class="op">==</span><span class="dv">1</span><span class="op">))</span></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>          count_up <span class="op">&lt;=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="kw">endmodule</span></span></code></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">output</span> <span class="op">[</span><span class="dv">15</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span> led</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">);</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">// PWM signals</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">reg</span> <span class="op">[</span><span class="dv">7</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span> din<span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">wire</span>      sout<span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Signals for clock divider:</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">integer</span>   count<span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">reg</span>       div_clk<span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">// State variable:</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">reg</span>       count_up<span class="op">;</span> <span class="co">// brighten (1) or dim (0)</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Assign all LEDs to equal the PWM signal</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">assign</span> led <span class="op">=</span> <span class="op">{</span><span class="dv">16</span><span class="op">{</span>sout<span class="op">}};</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Instantiate the PWM:</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    pwm PWM_inst_1<span class="op">(</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        .clk<span class="op">(</span>sys_clk<span class="op">),</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        .din<span class="op">(</span>din<span class="op">),</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        .sout<span class="op">(</span>sout<span class="op">)</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>     <span class="op">);</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Initialize reg signals</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">initial</span> <span class="kw">begin</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        din      <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        count    <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        count_up <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        din      <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co">// Implement a clock divider:</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="kw">always</span> <span class="op">@(</span><span class="kw">posedge</span> sys_clk<span class="op">)</span> <span class="kw">begin</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="op">(</span>count <span class="op">&gt;=</span> <span class="dv">500</span>_000<span class="op">)</span> <span class="kw">begin</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>            count   <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>            div_clk <span class="op">&lt;=</span> <span class="op">~</span>div_clk<span class="op">;</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        <span class="kw">end</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>        <span class="kw">else</span> </span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>            count <span class="op">&lt;=</span> count <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Main brighten/dim process:</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="kw">always</span> <span class="op">@(</span><span class="kw">posedge</span> div_clk<span class="op">)</span> <span class="kw">begin</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Adjust the PWM brightness level</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="op">(</span>count_up<span class="op">)</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>           din <span class="op">&lt;=</span> din <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>        <span class="kw">else</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>           din <span class="op">&lt;=</span> din <span class="op">-</span> <span class="dv">1</span><span class="op">;</span>       </span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>           </span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>       <span class="co">// If we&#39;ve reach maximum brightness, start dimming.</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>       <span class="co">// If we&#39;ve reached minimum brightness, start brightening.</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>       <span class="kw">if</span> <span class="op">((</span>count_up<span class="op">)&amp;&amp;(</span>din <span class="op">==</span> <span class="dv">254</span><span class="op">))</span> </span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>          count_up <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">;</span>            </span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>       <span class="kw">else</span> <span class="kw">if</span> <span class="op">((~</span>count_up<span class="op">)&amp;&amp;(</span>din<span class="op">==</span><span class="dv">1</span><span class="op">))</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>          count_up <span class="op">&lt;=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="kw">endmodule</span></span></code></pre></div>
 <h1 id="part-2-audio-signal-generation">Part 2: Audio Signal
 Generation</h1>
 <h2 id="pwm-square-wave-tones">PWM Square-Wave Tones</h2>
@@ -271,66 +303,50 @@ the duty cycle (i.e. the volume) in increments from 0 to 256.</p>
 <div class="sourceCode" id="cb2"><pre
 class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> pwm_audio<span class="op">(</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>   <span class="dt">input</span>       clk<span class="op">,</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">input</span>       rst_n<span class="op">,</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">input</span> <span class="op">[</span><span class="dv">7</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span> volume<span class="op">,</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">input</span> <span class="op">[</span><span class="dv">9</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span> N<span class="op">,</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>   <span class="dt">output</span> <span class="dt">reg</span>  sout</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>   <span class="op">);</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>   <span class="dt">reg</span> <span class="op">[</span><span class="dv">9</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span> f_count<span class="op">;</span>  <span class="co">// counter for frequency synthesis</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>   <span class="dt">reg</span>       f_clk<span class="op">;</span>    <span class="co">// divided clock</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>   <span class="dt">reg</span> <span class="op">[</span><span class="dv">7</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span> dc_count<span class="op">;</span> <span class="co">// counter for duty cycle</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>   <span class="kw">initial</span> <span class="kw">begin</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>      f_count  <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>      sout     <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>      f_clk    <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>      dc_count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>   <span class="kw">end</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>   <span class="co">// First clock divider sets the tone frequency:</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>   <span class="kw">always</span> <span class="op">@(</span><span class="kw">posedge</span> clk<span class="op">,</span> <span class="kw">negedge</span> rst_n<span class="op">)</span> <span class="kw">begin</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>      <span class="kw">if</span> <span class="op">(!</span>rst_n<span class="op">)</span> <span class="kw">begin</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>         f_count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>     f_clk   <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>      <span class="kw">end</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> <span class="kw">begin</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>         <span class="kw">if</span> <span class="op">(</span>f_count <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> <span class="kw">begin</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        f_count <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>        f_clk   <span class="op">&lt;=</span> <span class="op">~</span>fclk<span class="op">);</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>     <span class="kw">end</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>     <span class="kw">else</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        f_count <span class="op">&lt;=</span> f_count <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>   <span class="kw">end</span></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  <span class="co">//  Second clock divider sets the duty cycle:</span></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>   <span class="kw">always</span> <span class="op">@(</span><span class="kw">posedge</span> f_clk<span class="op">,</span> <span class="kw">negedge</span> rst_n<span class="op">)</span> <span class="kw">begin</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>      <span class="kw">if</span> <span class="op">(!</span>rst_n<span class="op">)</span> <span class="kw">begin</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>         dc_count <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>     sout  <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>      <span class="kw">end</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> <span class="kw">begin</span></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>         dc_count <span class="op">&lt;=</span> dc_count <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>         <span class="kw">if</span> <span class="op">(</span>dc_count <span class="op">&lt;</span> volume<span class="op">)</span></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>        sout <span class="op">&lt;=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>     <span class="kw">else</span></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>        sout <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>      <span class="kw">end</span></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>   <span class="kw">end</span></span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="kw">endmodule</span></span></code></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">input</span> <span class="op">[</span><span class="dv">7</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span> volume<span class="op">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">input</span> <span class="op">[</span><span class="dv">9</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span> N<span class="op">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>   <span class="dt">output</span> <span class="dt">reg</span>  sout</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>   <span class="op">);</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>   <span class="dt">reg</span> <span class="op">[</span><span class="dv">9</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span> f_count<span class="op">;</span>  <span class="co">// counter for frequency synthesis</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>   <span class="dt">reg</span>       f_clk<span class="op">;</span>    <span class="co">// divided clock</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>   <span class="dt">reg</span> <span class="op">[</span><span class="dv">7</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span> dc_count<span class="op">;</span> <span class="co">// counter for duty cycle</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>   <span class="kw">initial</span> <span class="kw">begin</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>      f_count  <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>      sout     <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>      f_clk    <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>      dc_count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>   <span class="kw">end</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>   <span class="co">// First clock divider sets the tone frequency:</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>   <span class="kw">always</span> <span class="op">@(</span><span class="kw">posedge</span> clk<span class="op">)</span> <span class="kw">begin</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>      <span class="kw">if</span> <span class="op">(</span>f_count <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> <span class="kw">begin</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>         f_count <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>         f_clk   <span class="op">&lt;=</span> <span class="op">~</span>fclk<span class="op">);</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>      <span class="kw">end</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>         f_count <span class="op">&lt;=</span> f_count <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>   <span class="kw">end</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="co">//  Second clock divider sets the duty cycle:</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>   <span class="kw">always</span> <span class="op">@(</span><span class="kw">posedge</span> f_clk<span class="op">)</span> <span class="kw">begin</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>      dc_count <span class="op">&lt;=</span> dc_count <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>      <span class="kw">if</span> <span class="op">(</span>dc_count <span class="op">&lt;</span> volume<span class="op">)</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>         sout <span class="op">&lt;=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>         sout <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>   <span class="kw">end</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="kw">endmodule</span></span></code></pre></div>
 <p>The note frequency is controlled by the first clock divider ratio,
-<span class="math inline"><em>N</em></span>. To determine the value of
-<span class="math inline"><em>N</em></span> for a particular note, we
-follow this procedure:</p>
+<span class="math inline">N</span>. To determine the value of <span
+class="math inline">N</span> for a particular note, we follow this
+procedure:</p>
 <ul>
-<li><span class="math inline"><em>f</em><sub><em>c</em></sub></span> =
-the system clock frequency (100MHz for Basys3)</li>
-<li><span class="math inline"><em>f</em></span> = the target note
-frequency</li>
-<li>Then <span class="math inline">$N = \frac{fc}{2f\times
-256}$</span></li>
+<li><span class="math inline">f_c</span> = the system clock frequency
+(100MHz for Basys3)</li>
+<li><span class="math inline">f</span> = the target note frequency</li>
+<li>Then <span class="math inline">N = \frac{f_c}{(2f)(256)}</span></li>
 </ul>
 <p>The factor of <code
 class="sourceCode verilog"><span class="dv">256</span></code> in the
@@ -342,8 +358,7 @@ frequencies, and the associated divider values are shown below.</p>
 <table>
 <thead>
 <tr class="header">
-<th style="text-align: center;"><span
-class="math inline"><em>N</em></span></th>
+<th style="text-align: center;"><span class="math inline">N</span></th>
 <th style="text-align: center;">sout frequency</th>
 <th style="text-align: center;">closest note</th>
 <th style="text-align: center;">note frequency</th>

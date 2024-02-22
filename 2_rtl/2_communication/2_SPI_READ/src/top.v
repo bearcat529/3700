@@ -18,7 +18,7 @@ module top
 	reg timer_count;
 
 	initial begin
-		rd = 0;
+		rd = 1;
 		timer_count = 0;
 	end
 

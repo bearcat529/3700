@@ -15,7 +15,7 @@ module top
 	assign rst_l = ~rst;
 	reg rd;
 	wire d_ready;
-	integer timer_count;
+	reg [70:0] timer_count;
 
 	initial begin
 		rd = 1;

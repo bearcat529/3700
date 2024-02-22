@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 
 module top
-#(parameter refresh_period = 40_000)
+#(parameter refresh_period = 200000)
 (
 	input clk,
 	input rst,

@@ -10,6 +10,7 @@ module top
 	output CS,
 	output [15:0] led
 );
+	wire [15:0] temp_led;
 	reg [2:0] state;
 	wire rst_l;
 	assign rst_l = ~rst;
@@ -23,7 +24,9 @@ module top
 		state <= 0;
 	end
 
-	simpleSPI spi(.SCLK(SCLK), .CS(CS), .SDO(SDO), .clk(clk), .rst_l(rst_l), .rd(rd), .d_ready(d_ready), .d(led));
+	simpleSPI spi(.SCLK(SCLK), .CS(CS), .SDO(SDO), .clk(clk), .rst_l(rst_l), .rd(rd), .d_ready(d_ready), .d(temp_led));
+	assign led[12:0]= temp_led[15:0];
+	assign led[15:13] = state;
 
 	
 //	always @(posedge SCLK, negedge d_ready) begin

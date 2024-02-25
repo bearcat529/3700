@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 
 module top
-#(parameter refresh_period = 200000)
+#(parameter refresh_period = 40_000)
 (
 	input clk,
 	input rst,
@@ -71,7 +71,7 @@ module top
 						rd <= 1;
                                                 state<=0;
 					end
-					else if(timer_count <40_000) begin
+					else if(timer_count <refresh_period) begin
 						timer_count <= timer_count+1;
 					end
 

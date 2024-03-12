@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-module fifo #(
+module stack #(
 	      parameter WIDTH     = 8,
 	      parameter DEPTH     = 5,
 	      parameter ADR_WIDTH = 3
@@ -94,7 +94,7 @@ module fifo #(
 	   // your code here
 	   if(!empty)begin
 		   rx_rdy <= 1;
-		   out_data <= buffer[back];
+		   out_data <= buffer[front];
 		   rx_state <= 1;
 		end
 		else if(empty) begin
@@ -148,25 +148,24 @@ module fifo #(
 		 full<=1;
 	 if(front <DEPTH-1)
 		 front<=front +1;
-	 else 
-		 front <= 0;
+	 
 
       end 
       
       // Remove data
       else if (!incr && decr && !empty) begin
 	 // your code here
-	 out_data <= buffer[back];
+	 out_data <= buffer[front];
 
 	 count <= count -1;
 	 full <= 0;
 	 if(count == 1)
 		 empty <= 1;
 
-	 if(back < DEPTH-1)
-		 back<=back+1;
-	 else 
-		 back <= 0;
+	 if(front > 0)
+		 front<=front-1;
+//	 else 
+//		 front <= DEPTH-1;
       end
       
       // Add and Remove data

@@ -27,7 +27,7 @@ module testbench();
 
 	      
    
-   fifo DUT(
+   stack DUT(
    .clk(clk),
 
    // Transmit Interface
@@ -62,18 +62,23 @@ module testbench();
       
    end
 
-   
+   integer fid;
+   initial fid = $fopen("lifo_test.txt", "w");
+
    always @(posedge clk) begin
       clk_count <= clk_count + 1;
-      if (clk_count == 1)
+      if (clk_count == 1)begin
 	$display("============== PUSH DATA IN ===============");
-      
+        $fwrite(fid, "============== PUSH DATA IN ===============\n");
+      end
       if (write) begin
 	 if ((clk_count % 10) == 2) begin
 	    tx_rdy = 1;
 	    in_data = $random();
 	    $display("%d in_data: %d tx_rdy done:%b count:%d front:%d back:%d",clk_count,
-		     in_data,tx_done,DUT.count,DUT.front,DUT.back); 
+		     in_data,tx_done,DUT.count,DUT.front,DUT.back);
+	    $fwrite(fid, "%d in_data: %d tx_rdy done:%b count:%d front:%d back:%d\n",clk_count,
+                     in_data,tx_done,DUT.count,DUT.front,DUT.back); 
 	 end
 	 if (tx_done) begin	 
 	 //   $write("%d tx_done incr:%b decr:%b",clk_count, DUT.incr, DUT.decr);
@@ -86,6 +91,8 @@ module testbench();
 	    write <= 0;
 	    $display("%d buffer full",clk_count);	    
 	    $display("============== PULL DATA OUT ===============");
+	    $fwrite(fid,"%d buffer full\n",clk_count);
+            $fwrite(fid,"============== PULL DATA OUT ===============\n");
 	 end
       end // if (write)
       else begin
@@ -94,6 +101,8 @@ module testbench();
 	       rx_done = 1;
 	       $display("%d out_data: %d rx_rdy:%b done count:%d front:%d back:%d",clk_count,
 			out_data,rx_rdy,DUT.count,DUT.front,DUT.back);
+		$fwrite(fid,"%d out_data: %d rx_rdy:%b done count:%d front:%d back:%d\n",clk_count,
+                        out_data,rx_rdy,DUT.count,DUT.front,DUT.back);
 	    end
 	 end
 	 if (!rx_rdy) begin	 
@@ -103,8 +112,10 @@ module testbench();
 	    
 	    rx_done <= 0;
 	 end
-	 if (empty)
+	 if (empty)begin
 	   $display("%d buffer empty",clk_count);
+           $fwrite(fid,"%d buffer empty\n",clk_count);
+   end
       end // else: !if(write)
       
       if ((!write && empty) || (clk_count > 100))

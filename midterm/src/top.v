@@ -7,9 +7,10 @@ module top(
 	input clk,
 	input rst,
 	input on_off,
-	input [7:0] volume
+	input [7:0] volume,
+	output [15:0] keys
 );
-	wire [15:0] keys;
+	wire [15:0] keys1;
 	reg [9:0] N;
 	wire switch;
 	reg off;

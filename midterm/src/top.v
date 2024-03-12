@@ -23,7 +23,7 @@ module top(
 	debouncer aa(.clk(clk), .rst_l(rst_l), .btn(on_off), .btn_db(switch));
 	//add debounce on and off
 	keypadTop a1(.keys(keys), .row(row), .col(col), .clk(clk), .rst(rst));
-	pwm_audio a2(.clk(clk), .volume(volume), .N(N), .sout(sout));
+	pwm_audio a2(.rst_n(rst_l), .clk(clk), .volume(volume), .N(N), .sout(sout));
         
 	initial begin
 		GAIN <= 1;

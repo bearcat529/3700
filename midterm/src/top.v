@@ -47,7 +47,7 @@ module top(
 		13: N<=665;
 		14: N<=593;
 		15: N<=559;
-		default N<=0;
+		//default: N<=0;
 		//
 	endcase
 

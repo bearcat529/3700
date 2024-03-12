@@ -8,7 +8,9 @@ module top(
 	input rst,
 	input on_off,
 	input [7:0] volume,
-	output [15:0] keys
+	output [15:0] keys,
+	output reg SHUTDOWN_L,
+	output reg GAIN
 );
 	wire [15:0] keys1;
 	reg [9:0] N;
@@ -16,8 +18,7 @@ module top(
 	reg off;
 	wire rst_l;
 	assign rst_l = ~rst;
-	reg SHUTDOWN_L;
-	reg GAIN;
+	
 	
 	debouncer aa(.clk(clk), .rst_l(rst_l), .btn(on_off), .btn_db(switch));
 	//add debounce on and off
@@ -41,17 +42,24 @@ module top(
 		end
 
 	case(keys) 
-		0: N<=498;
-		10: N<=444;
-		11: N<=395;
-		12: N<=747;
-		13: N<=665;
-		14: N<=593;
-		15: N<=559;
+		1: N<=498;
+		1024: N<=444;
+		2048: N<=395;
+		4096: N<=747;
+		8192: N<=665;
+		16384: N<=593;
+		32768: N<=559;
 		//default: N<=0;
 		//
-	endcase
 
+	endcase
+	//	if(keys[0]) N<=498;
+	//	else if(keys[10]) N<=444;
+	//	else if(keys[11]) N<=395;
+	//	else if(keys[12]) N<=747;
+	//	else if(keys[13]) N<=665;
+	//	else if(keys[14]) N<=593;
+	//	else if(keys[15]) N<=559;
 
 	end
 endmodule

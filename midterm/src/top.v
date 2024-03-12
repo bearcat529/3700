@@ -40,26 +40,32 @@ module top(
 			N<=0;
 			SHUTDOWN_L <=0;
 		end
-
-	case(keys) 
-		1: N<=498;
-		1024: N<=444;
-		2048: N<=395;
-		4096: N<=747;
-		8192: N<=665;
-		16384: N<=593;
-		32768: N<=559;
+		else SHUTDOWN_L <=1;
+	//case(keys) 
+	//	1: N<=498;
+	///	1024: N<=444;
+	//	2048: N<=395;
+	//	4096: N<=747;
+	//	8192: N<=665;
+	//	16384: N<=593;
+	//	32768: N<=559;
 		//default: N<=0;
 		//
 
-	endcase
-	//	if(keys[0]) N<=498;
-	//	else if(keys[10]) N<=444;
-	//	else if(keys[11]) N<=395;
-	//	else if(keys[12]) N<=747;
-	//	else if(keys[13]) N<=665;
-	//	else if(keys[14]) N<=593;
-	//	else if(keys[15]) N<=559;
+	//endcase
+		if(keys[0]) N<=498;
+		else if(keys[10]) N<=889;
+		else if(keys[11]) N<=791;
+		else if(keys[12]) N<=747;
+		else if(keys[13]) N<=665;
+		else if(keys[14]) N<=593;
+		else if(keys[15]) N<=559;
+		else if(keys[1]) N<=1185;
+		else if(keys[2]) N<=1119;
+		else if(keys[3]) N<=996;
+		else if(keys[7]) N<=444;
+		else if(keys[8]) N<=395;
+		else if(keys[9]) N<=373;
 
 	end
 endmodule

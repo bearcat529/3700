@@ -1,4 +1,5 @@
-module fifo22 #(
+`timescale 1ns/1ps
+module fifo #(
 	      parameter WIDTH     = 8,
 	      parameter DEPTH     = 5,
 	      parameter ADR_WIDTH = 3
@@ -34,10 +35,25 @@ module fifo22 #(
    
    initial begin
       // TX initialization
-
+      
+      tx_state <= 0;
+      tx_done = 0;
+	
       // RX initialization
+      rx_state <= 0;
+      rx_rdy <= 0;
+
 
       // Buffer initialization
+      incr = 0;
+      decr = 0;
+      front = 0;
+      back = 0;
+      count = 0;
+      empty = 1;
+      full = 0;
+      out_data = 0;
+
    end
 
 
@@ -48,10 +64,25 @@ module fifo22 #(
       case (tx_state)
 	0: begin
 	   // your code here
+	    if(tx_rdy && !full)begin
+                   tx_done<=1;
+                   incr<=1;
+		   tx_state <= 1;
+           end
+           else begin
+                   incr <= 0;
+                   tx_done <= 0;
+           end
 	end
 	
 	1: begin
 	   // your code here
+	   if(tx_rdy) incr<=0;
+	   else if(!tx_rdy)begin
+		   tx_done <=0;
+		   incr<=0;
+		   tx_state<=0;
+	   end
 	end
       endcase // case (tx_state)
       
@@ -61,15 +92,46 @@ module fifo22 #(
       case (rx_state)
 	0: begin
 	   // your code here
+	   if(!empty)begin
+		   rx_rdy <= 1;
+		   out_data <= buffer[back];
+		   rx_state <= 1;
+		end
+		else if(empty) begin
+		   rx_rdy <= 0;
+		   decr <= 0;
+	   end
+
 	end
 	
 	1: begin
 	   // yourr code here
+	   if(!rx_done)begin
+		   rx_rdy <= 1;
+	   end
+	   else if(rx_done)begin
+		   decr<=1;
+		   rx_state<=2;
+	   end
 	end
 	
 	2: begin
 	   // your code here
+	   if(rx_done)begin
+		   decr<=0;
+	   end
+	   else if(!rx_done)begin
+		   decr<=0;
+		   rx_rdy<=0;
+		   rx_state<=0;
+	   end
 	end
+	default:begin
+		rx_state<=0;
+		rx_rdy<=0;
+		decr<=0;
+	end
+
       endcase // case (rx_state)
 
       //-----------------
@@ -78,16 +140,48 @@ module fifo22 #(
       // Add data
       if (incr && !decr && !full) begin
 	 // your code here
+	 buffer[front] <= in_data;
+	 count <= count +1;
+	 empty <= 0;
+	 if(count == DEPTH-1)
+		 full<=1;
+	 if(front <DEPTH-1)
+		 front<=front +1;
+	 else 
+		 front <= 0;
+
       end 
       
       // Remove data
       else if (!incr && decr && !empty) begin
 	 // your code here
+	 out_data <= buffer[back];
+
+	 count <= count -1;
+	 full <= 0;
+	 if(count == 1)
+		 empty <= 1;
+
+	 if(back < DEPTH-1)
+		 back<=back+1;
+	 else 
+		 back <= 0;
       end
       
       // Add and Remove data
       else if (incr && decr) begin
 	 // your code here
+	 out_data <= buffer[back];
+	 buffer[front] <= in_data;
+	  if(front <DEPTH -1)
+		  front <=front +1;
+	  else
+		  front <=0;
+	  if(back<DEPTH-1)
+		  back <= back +1;
+	  else
+		  back <= 0;
+
       end	
    end
 endmodule // fifo

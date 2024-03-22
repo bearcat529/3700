@@ -10,6 +10,9 @@
   //    *  *  *  *  *  * 
   //                   ^
 
+   wire [15:0] 	      s_out;
+   reg [1:0] 	      avg;
+
    reg adc_rst_n;
    initial adc_rst_n = 0;
    

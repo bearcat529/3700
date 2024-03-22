@@ -108,6 +108,7 @@ module stack #(
 	   // yourr code here
 	   if(!rx_done)begin
 		   rx_rdy <= 1;
+		   out_data <= buffer[front];
 	   end
 	   else if(rx_done)begin
 		   decr<=1;

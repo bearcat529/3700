@@ -18,6 +18,8 @@ module uart_tx(
 	initial begin
 		clk_9600 = 0;
 		counter = 0;
+		state = 0;
+		tx = 1;
 	end
 
 	always @(posedge clk) begin

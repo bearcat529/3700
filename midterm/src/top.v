@@ -66,6 +66,7 @@ module top(
 		else if(keys[7]) N<=444;
 		else if(keys[8]) N<=395;
 		else if(keys[9]) N<=373;
+		else N<=0;
 
 	end
 endmodule

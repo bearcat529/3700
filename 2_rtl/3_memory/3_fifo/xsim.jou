@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# xsim v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:07 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Sat Apr  6 14:14:33 2024
+# Process ID: 505839
+# Current directory: /home/jee330/gitClones/3700/2_rtl/3_memory/3_fifo
+# Command line: xsim -mode tcl -source {xsim.dir/sim/xsim_script.tcl}
+# Log file: /home/jee330/gitClones/3700/2_rtl/3_memory/3_fifo/xsim.log
+# Journal file: /home/jee330/gitClones/3700/2_rtl/3_memory/3_fifo/xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/sim/xsim_script.tcl
+run -all

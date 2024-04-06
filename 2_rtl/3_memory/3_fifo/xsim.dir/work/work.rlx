@@ -1,0 +1,8 @@
+0.7
+2020.2
+Jun 10 2021
+19:45:28
+/home/jee330/gitClones/3700/2_rtl/3_memory/3_fifo/src/fifo.v,1710210239,verilog,,/home/jee330/gitClones/3700/2_rtl/3_memory/3_fifo/src/stack.v,,fifo,,,,,,,,
+/home/jee330/gitClones/3700/2_rtl/3_memory/3_fifo/src/fifo_template.v,1710208443,verilog,,/home/jee330/gitClones/3700/2_rtl/3_memory/3_fifo/src/fifo.v,,fifo22,,,,,,,,
+/home/jee330/gitClones/3700/2_rtl/3_memory/3_fifo/src/stack.v,1711144742,verilog,,/home/jee330/gitClones/3700/2_rtl/3_memory/3_fifo/src/test_fifo.v,,stack,,,,,,,,
+/home/jee330/gitClones/3700/2_rtl/3_memory/3_fifo/src/test_fifo.v,1710213129,verilog,,,,testbench,,,,,,,,

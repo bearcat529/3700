@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:07 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Mon Mar 11 19:54:12 2024
+# Process ID: 414259
+# Current directory: /home/jee330/gitClones/3700/2_rtl/3_memory/3_fifo
+# Command line: wbtcv -mode batch -source /home/jee330/gitClones/3700/2_rtl/3_memory/3_fifo/xsim.dir/sim/webtalk/xsim_webtalk.tcl -notrace
+# Log file: /home/jee330/gitClones/3700/2_rtl/3_memory/3_fifo/webtalk.log
+# Journal file: /home/jee330/gitClones/3700/2_rtl/3_memory/3_fifo/webtalk.jou
+#-----------------------------------------------------------
+source /home/jee330/gitClones/3700/2_rtl/3_memory/3_fifo/xsim.dir/sim/webtalk/xsim_webtalk.tcl -notrace

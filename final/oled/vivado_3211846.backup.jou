@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:07 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Thu Apr 18 16:40:06 2024
+# Process ID: 3211846
+# Current directory: /home/jee330/gitClones/3700/OLED_test/oled
+# Command line: vivado -mode batch -source build.tcl
+# Log file: /home/jee330/gitClones/3700/OLED_test/oled/vivado.log
+# Journal file: /home/jee330/gitClones/3700/OLED_test/oled/vivado.jou
+#-----------------------------------------------------------
+source build.tcl
